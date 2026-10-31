@@ -256,6 +256,8 @@ def render_summary(case, result):
             + row("Defendant", defendant)
             + row("Victim", victim)
             + counsel
+            + row("Case written by", f"<span class='bg'>{esc(s(case.get('model')))}</span>"
+                  if case.get("model") else "")
             + (f"<h4>Evidence locker</h4><ul>{locker}</ul>" if locker else "")
             + (f"<h4>Witnesses</h4><ul>{wits}</ul>" if wits else "")
             + "</div>")

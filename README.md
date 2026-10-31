@@ -26,6 +26,7 @@ Every statement, objection, private thought, and juror ballot from one complete 
 | Defense | Preston Whitmore III, polished Houston big-firm attorney | `mistral-small3.2:24b` |
 | Judge | Eleanor Price, strict and extremely short-tempered | `mistral-small3.2:24b` |
 | Witnesses & jurors | Generated per case; jurors drawn from 8 personas | `gemma4:12b` |
+| Case generator | Writes each crime, its hidden truth, the evidence, and the witnesses | `gpt-oss:20b` |
 
 ## Trial flow
 
