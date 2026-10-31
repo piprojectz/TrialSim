@@ -8,6 +8,9 @@ with flags:
     ADMITTED  post-thought honesty_check confessed to stretching the truth
     CLEAN     none of the above
 
+The page opens with a case summary (charge, defendant, victim, evidence locker,
+witnesses). With --reveal, a collapsed spoiler panel adds the ground truth.
+
 Run `python report.py -h` for all options. See CHEATSHEET.md.
 """
 import argparse
@@ -74,6 +77,11 @@ def find_run(arg):
 def load_case(run_dir):
     case_id = run_dir.name.rsplit("_", 1)[0]
     f = CASES_DIR / f"{case_id}.json"
+    return json.loads(f.read_text(encoding="utf-8")) if f.exists() else None
+
+
+def load_result(run_dir):
+    f = run_dir / "result.json"
     return json.loads(f.read_text(encoding="utf-8")) if f.exists() else None
 
 
@@ -197,20 +205,73 @@ def r_is_ballot(juror, col_name, leanings):
     return str(col_name).startswith("ballot")
 
 
-def render_verdict(run_dir, case, reveal=False):
-    f = run_dir / "result.json"
-    if not f.exists():
+def render_summary(case, result):
+    """Spoiler-free case summary: what a juror would know walking into the courtroom."""
+    if not case:
+        return ""
+    pub, gt = case.get("public", {}), case.get("ground_truth", {})
+
+    def row(label, value):
+        return (f"<div class='kv'><span class='k'>{esc(label)}</span>"
+                f"<span class='v'>{value}</span></div>") if value else ""
+
+    d = gt.get("defendant")
+    if isinstance(d, dict):
+        name = s(d.get("name") or pub.get("defendant"))
+        facts = ", ".join(x for x in (f"age {s(d['age'])}" if d.get("age") else "",
+                                      s(d.get("occupation"))) if x)
+        defendant = esc(name) + (f" &middot; {esc(facts)}" if facts else "")
+        if d.get("background"):
+            defendant += f"<br><span class='bg'>{esc(s(d['background']))}</span>"
+    else:
+        defendant = esc(s(pub.get("defendant") or d))
+
+    v = gt.get("victim")
+    if isinstance(v, dict):
+        victim = esc(s(v.get("name") or pub.get("victim")))
+        if v.get("description"):
+            victim += f"<br><span class='bg'>{esc(s(v['description']))}</span>"
+    else:
+        victim = esc(s(pub.get("victim") or v))
+
+    counsel = ""
+    if result:
+        p, df = result.get("prosecutor") or {}, result.get("defense") or {}
+        counsel = (row("Prosecution", f"{esc(s(p.get('name')))} <span class='bg'>"
+                                      f"({esc(s(p.get('model')))})</span>") +
+                   row("Defense", f"{esc(s(df.get('name')))} <span class='bg'>"
+                                  f"({esc(s(df.get('model')))})</span>"))
+
+    locker = "".join(f"<li><b>{esc(s(e.get('id')))}</b> {esc(s(e.get('name')))}"
+                     f"<br><span class='bg'>{esc(s(e.get('description')))}</span></li>"
+                     for e in case.get("evidence_locker", []))
+    wits = "".join(f"<li><b>{esc(s(w.get('name')))}</b> &middot; {esc(s(w.get('role')))}"
+                   f"{' &middot; <span class=bg>called by the ' + esc(s(w.get('called_by'))) + '</span>' if w.get('called_by') else ''}"
+                   f"</li>" for w in gt.get("witnesses", []))
+
+    return ("<div class='case'><h2>The case</h2>"
+            + row("Crime", esc(s(gt.get("crime"))))
+            + row("Charge", esc(s(pub.get("charge"))))
+            + row("Location", esc(s(pub.get("location"))))
+            + row("Defendant", defendant)
+            + row("Victim", victim)
+            + counsel
+            + (f"<h4>Evidence locker</h4><ul>{locker}</ul>" if locker else "")
+            + (f"<h4>Witnesses</h4><ul>{wits}</ul>" if wits else "")
+            + "</div>")
+
+
+def render_verdict(result):
+    if not result:
         return "<p class='sub'>No verdict yet (trial incomplete or run before deliberation existed).</p>"
-    r = json.loads(f.read_text(encoding="utf-8"))
-    v = r["verdict"].upper()
+    v = result["verdict"].upper()
     color = {"GUILTY": "#e5484d", "NOT GUILTY": "#3e8ef7"}.get(v, "#9aa0a6")
-    t = r.get("final_tally", {})
-    right = {True: "RIGHT", False: "WRONG", None: "N/A (hung)"}[r.get("correct")]
+    t = result.get("final_tally", {})
     return (f"<div class='verdict' style='--v:{color}'><div class='vlabel'>Verdict</div>"
             f"<div class='vword'>{esc(v)}</div><div class='sub'>"
             f"{t.get('guilty', 0)} guilty &middot; {t.get('not guilty', 0)} not guilty &middot; "
-            f"{r.get('rounds')} ballot round(s) &middot; {r.get('minutes')} min"
-            f"{' &middot; jury was <b>' + right + '</b>' if reveal else ''}</div></div>")
+            f"{result.get('rounds')} ballot round(s) &middot; {result.get('minutes')} min"
+            f"</div></div>")
 
 
 def render_jury(leanings, a):
@@ -251,7 +312,7 @@ def render_jury(leanings, a):
             f"{details}</details>")
 
 
-def render_truth(case):
+def render_truth(case, result):
     gt = case["ground_truth"]
     ev = "".join(
         f"<div class='kv'><span class='k'>{esc(e.get('id', ''))} {esc(e.get('name', ''))}</span>"
@@ -263,8 +324,12 @@ def render_truth(case):
         f"{' &middot; <b>WILL LIE</b>: ' + esc(s(w.get('lie_reason'))) if w.get('will_lie') else ''}"
         f"</span></div>" for w in gt.get("witnesses", []))
     verdict = "GUILTY" if case.get("guilty") else "INNOCENT"
+    right = ""
+    if result:
+        right = {True: "The jury got it RIGHT.", False: "The jury got it WRONG.",
+                 None: "The jury hung, so no verdict to score."}.get(result.get("correct"), "")
     return (f"<details class='truth'><summary>Ground truth (spoiler)</summary>"
-            f"<p><b>Defendant is {verdict}.</b> Actual perpetrator: "
+            f"<p><b>Defendant is {verdict}.</b> {esc(right)} Actual perpetrator: "
             f"{esc(s(gt.get('actual_perpetrator')))}</p>"
             f"<p>{esc(s(gt.get('what_really_happened')))}</p>"
             f"<h4>Evidence</h4>{ev}<h4>Witnesses</h4>{wit}</details>")
@@ -302,6 +367,11 @@ summary{cursor:pointer;font-weight:600}
 .vlabel{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--mute)}
 .vword{font-size:28px;font-weight:800;color:var(--v)}
 .jury td.ballot{font-weight:700}
+.case{background:var(--card);border:1px solid var(--line);border-left:6px solid #a78bfa;border-radius:8px;padding:14px 16px;margin:16px 0}
+.case h2{margin:0 0 10px}
+.case h4{margin:16px 0 6px;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--mute)}
+.case ul{margin:0;padding-left:18px}.case li{margin:5px 0}
+.bg{color:var(--mute);font-size:13px}
 @media (max-width:600px){.kv{grid-template-columns:1fr;gap:0}}
 """
 
@@ -323,7 +393,8 @@ def main():
     v.add_argument("--thoughts-only", action="store_true", help="hide public statements")
     v.add_argument("--public-only", action="store_true", help="hide private thoughts")
     ap.add_argument("--no-jury", action="store_true", help="hide the jury leanings table")
-    ap.add_argument("--reveal", action="store_true", help="include the ground truth (spoiler)")
+    ap.add_argument("--no-summary", action="store_true", help="hide the case summary at the top")
+    ap.add_argument("--reveal", action="store_true", help="include the ground truth (collapsed spoiler)")
     ap.add_argument("--out", help="output file (default: <run>/report[_filters].html)")
     ap.add_argument("--open", action="store_true", help="open in your browser when done")
     a = ap.parse_args()
@@ -332,6 +403,7 @@ def main():
     recs = [json.loads(l) for l in
             (run_dir / "transcript.jsonl").read_text(encoding="utf-8").splitlines() if l.strip()]
     case = load_case(run_dir)
+    result = load_result(run_dir)
     turns, leanings = build_turns(recs)
     shown = [t for t in turns if keep(t, a)]
 
@@ -347,20 +419,22 @@ def main():
 
     body = [f"<main><h1>{esc(title)}</h1>",
             f"<p class='sub'>{esc(run_dir.name)}"
-            f"{' &middot; filters: ' + esc(', '.join(filters)) if filters else ''}</p>",
-            "<div class='stats'>"
-            f"<div class='stat'><b>{len(turns)}</b>turns</div>"
-            f"<div class='stat'><b>{count('fake')}</b>fake exhibits</div>"
-            f"<div class='stat'><b>{count('spin')}</b>planned spin</div>"
-            f"<div class='stat'><b>{count('admitted')}</b>admitted stretches</div>"
-            f"<div class='stat'><b>{objections}</b>objections</div>"
-            f"<div class='stat'><b>{sustained}</b>sustained</div>"
-            f"<div class='stat'><b>{outbursts}</b>judge outbursts</div>"
-            f"<div class='stat'><b>{contempt}</b>contempt warnings</div>"
-            f"<div class='stat'><b>{count('clean')}</b>clean</div></div>"]
-    body.append(render_verdict(run_dir, case, a.reveal))
+            f"{' &middot; filters: ' + esc(', '.join(filters)) if filters else ''}</p>"]
+    if not a.no_summary:
+        body.append(render_summary(case, result))
+    body.append("<div class='stats'>"
+                f"<div class='stat'><b>{len(turns)}</b>turns</div>"
+                f"<div class='stat'><b>{count('fake')}</b>fake exhibits</div>"
+                f"<div class='stat'><b>{count('spin')}</b>planned spin</div>"
+                f"<div class='stat'><b>{count('admitted')}</b>admitted stretches</div>"
+                f"<div class='stat'><b>{objections}</b>objections</div>"
+                f"<div class='stat'><b>{sustained}</b>sustained</div>"
+                f"<div class='stat'><b>{outbursts}</b>judge outbursts</div>"
+                f"<div class='stat'><b>{contempt}</b>contempt warnings</div>"
+                f"<div class='stat'><b>{count('clean')}</b>clean</div></div>")
+    body.append(render_verdict(result))
     if a.reveal and case:
-        body.append(render_truth(case))
+        body.append(render_truth(case, result))
     body.append(f"<h2>Turns ({len(shown)} shown)</h2>")
     body += [render_turn(t, a) for t in shown] or ["<p class='sub'>No turns match.</p>"]
     body.append(render_jury(leanings, a))
