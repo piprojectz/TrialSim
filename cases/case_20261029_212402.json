@@ -1,0 +1,158 @@
+{
+  "case_id": "case_20261029_212402",
+  "created": "2026-10-29T21:24:02",
+  "model": "gpt-oss:20b",
+  "guilty": true,
+  "ground_truth": {
+    "title": "State v. Harold Jennings",
+    "crime": "Sabotage",
+    "location": "Riverside Senior Care Home, 12 Riverside Way, Springfield",
+    "charge": "Second‑degree sabotage of property resulting in loss of utility services",
+    "defendant": {
+      "name": "Harold Jennings",
+      "age": 58,
+      "occupation": "City Council Member",
+      "background": "Long‑time resident of Springfield, former construction project manager, member of the city’s Transportation Committee"
+    },
+    "victim": {
+      "name": "Riverside Senior Care Home",
+      "description": "Facility for residents aged 65 and older, with 80 beds and a central heating and air‑conditioning system"
+    },
+    "what_really_happened": "On the night of March 3, 2024, Harold Jennings entered the care home through a maintenance entrance and tampered with the main electrical panel by installing a short‑circuit device. The device caused the building’s backup generator to fail, leaving the home without power for 4 hours and forcing residents to use emergency lights. Jennings left the facility with a bag of tools that he later returned to his council office. No one saw him while he was inside the building. The sabotage was discovered by the home’s chief engineer the next morning when he found the altered panel.",
+    "actual_perpetrator": "Harold Jennings",
+    "timeline": [
+      {
+        "time": "21:30, March 3, 2024",
+        "event": "Jennings enters the care home via the maintenance entrance."
+      },
+      {
+        "time": "22:00, March 3, 2024",
+        "event": "Jennings installs the short‑circuit device on the main electrical panel."
+      },
+      {
+        "time": "23:00, March 3, 2024",
+        "event": "Backup generator fails; power loss begins."
+      },
+      {
+        "time": "02:30, March 4, 2024",
+        "event": "Power restored by emergency crew; generator repaired."
+      },
+      {
+        "time": "04:00, March 4, 2024",
+        "event": "Chief engineer discovers altered panel and reports sabotage."
+      }
+    ],
+    "evidence": [
+      {
+        "name": "CCTV Footage from Building Entrance",
+        "description": "Video capture showing a man in a city council jacket entering through the maintenance door at 21:32.",
+        "points_toward": "guilt",
+        "truth_note": "The footage shows the defendant’s presence at the time the sabotage likely began, aligning with the known entry time.",
+        "id": "E1"
+      },
+      {
+        "name": "Maintenance Log Sheet",
+        "description": "Signed log entry by Jennings indicating he performed a \"routine inspection\" of the electrical system at 22:05.",
+        "points_toward": "guilt",
+        "truth_note": "Jennings’ claim of inspection is the official record; the inspection log coincides with the sabotage time window.",
+        "id": "E2"
+      },
+      {
+        "name": "Toolbox Contents List",
+        "description": "Inventory of tools taken from Jennings’ council office, including a soldering iron and insulated wire, found on March 7.",
+        "points_toward": "guilt",
+        "truth_note": "The tools match those required to tamper with the electrical panel and were missing from Jennings’ office during the sabotage incident.",
+        "id": "E3"
+      },
+      {
+        "name": "Electrical Panel Inspection Report",
+        "description": "Report by the chief engineer noting a short‑circuit device and a missing circuit breaker.",
+        "points_toward": "guilt",
+        "truth_note": "The report documents the physical tampering that caused the outage.",
+        "id": "E4"
+      },
+      {
+        "name": "Resident Testimony of Ambient Noise",
+        "description": "Several residents reported hearing a low rumble at 22:30, possibly from the electrical panel.",
+        "points_toward": "ambiguous",
+        "truth_note": "The noise could be the sabotage device activating or normal equipment malfunction; the testimony does not specify a source.",
+        "id": "E5"
+      },
+      {
+        "name": "City Council Minutes",
+        "description": "Minutes showing a meeting on March 2 where Jennings proposed a temporary shutdown of the home’s power to test emergency protocols.",
+        "points_toward": "innocence",
+        "truth_note": "The meeting record is accurate; Jennings’ proposal was a legitimate safety measure, not sabotage.",
+        "id": "E6"
+      }
+    ],
+    "witnesses": [
+      {
+        "name": "Maria Lopez",
+        "role": "Chief Engineer of Riverside Senior Care Home",
+        "knows": "Observed the altered panel and the device installed.",
+        "bias": "Professional duty to protect facility, favors prosecution to ensure safety.",
+        "will_lie": false,
+        "lie_reason": "",
+        "called_by": "prosecution"
+      },
+      {
+        "name": "Thomas Reed",
+        "role": "Neighbor and city council ally of Jennings",
+        "knows": "Attended the council meeting on March 2 where Jennings proposed the power test.",
+        "bias": "Personal loyalty to Jennings, may minimize wrongdoing.",
+        "will_lie": true,
+        "lie_reason": "To protect Jennings from legal consequences.",
+        "called_by": "defense"
+      },
+      {
+        "name": "Evelyn Hart",
+        "role": "Resident of the care home",
+        "knows": "Saw the rumbling noise at 22:30 and heard Jennings leave the building.",
+        "bias": "Neutral; no known affiliation.",
+        "will_lie": false,
+        "lie_reason": "",
+        "called_by": "prosecution"
+      }
+    ]
+  },
+  "evidence_locker": [
+    {
+      "id": "E1",
+      "name": "CCTV Footage from Building Entrance",
+      "description": "Video capture showing a man in a city council jacket entering through the maintenance door at 21:32."
+    },
+    {
+      "id": "E2",
+      "name": "Maintenance Log Sheet",
+      "description": "Signed log entry by Jennings indicating he performed a \"routine inspection\" of the electrical system at 22:05."
+    },
+    {
+      "id": "E3",
+      "name": "Toolbox Contents List",
+      "description": "Inventory of tools taken from Jennings’ council office, including a soldering iron and insulated wire, found on March 7."
+    },
+    {
+      "id": "E4",
+      "name": "Electrical Panel Inspection Report",
+      "description": "Report by the chief engineer noting a short‑circuit device and a missing circuit breaker."
+    },
+    {
+      "id": "E5",
+      "name": "Resident Testimony of Ambient Noise",
+      "description": "Several residents reported hearing a low rumble at 22:30, possibly from the electrical panel."
+    },
+    {
+      "id": "E6",
+      "name": "City Council Minutes",
+      "description": "Minutes showing a meeting on March 2 where Jennings proposed a temporary shutdown of the home’s power to test emergency protocols."
+    }
+  ],
+  "public": {
+    "title": "State v. Harold Jennings",
+    "charge": "Second‑degree sabotage of property resulting in loss of utility services",
+    "location": "Riverside Senior Care Home, 12 Riverside Way, Springfield",
+    "defendant": "Harold Jennings",
+    "victim": "Riverside Senior Care Home"
+  }
+}

@@ -1,0 +1,153 @@
+{
+  "case_id": "case_20261029_200702",
+  "created": "2026-10-29T20:07:02",
+  "model": "gpt-oss:20b",
+  "guilty": true,
+  "ground_truth": {
+    "title": "State v. Marcus Reed",
+    "crime": "art theft",
+    "location": "St. Agnes Catholic Church, Cedar Grove",
+    "charge": "Theft of religious property",
+    "defendant": {
+      "name": "Marcus Reed",
+      "age": 34,
+      "occupation": "IT administrator",
+      "background": "Former network engineer, responsible for church’s digital security"
+    },
+    "victim": {
+      "name": "St. Agnes Church",
+      "description": "Historic Catholic parish with a 12th‑century crucifix and a 15th‑century fresco"
+    },
+    "what_really_happened": "On the night of March 14, Marcus Reed used his knowledge of the church’s security system to disable the motion sensors covering the main altar. He entered the sanctuary during a midnight Mass and removed the fresco panel, placing it in a storage locker. He then restored the sensors and left unnoticed. The fresco was discovered missing the next morning by the parish secretary. No other persons had access to the altar area that night.",
+    "actual_perpetrator": "Marcus Reed",
+    "timeline": [
+      {
+        "time": "23:00",
+        "event": "Reed logs into church network from the IT office"
+      },
+      {
+        "time": "23:15",
+        "event": "Reed disables motion sensors on altar wall"
+      },
+      {
+        "time": "23:20",
+        "event": "Reed enters sanctuary during midnight Mass"
+      },
+      {
+        "time": "23:45",
+        "event": "Reed removes fresco panel and stores it in a locked locker"
+      },
+      {
+        "time": "23:50",
+        "event": "Reed restores motion sensors, exits church"
+      },
+      {
+        "time": "04:00",
+        "event": "Parish secretary discovers missing fresco"
+      }
+    ],
+    "evidence": [
+      {
+        "name": "Security Camera Footage",
+        "description": "Video from the altar camera shows a figure moving toward the fresco at 23:20.",
+        "points_toward": "guilt",
+        "truth_note": "The footage is a true recording of the suspect’s approach; the suspect is wearing a generic hoodie, not revealing identity.",
+        "id": "E1"
+      },
+      {
+        "name": "Unlocked Motion Sensors Log",
+        "description": "Digital log shows sensors disabled between 23:10 and 23:55.",
+        "points_toward": "guilt",
+        "truth_note": "Reed is the only person with credentials to alter the sensors, making the log a factual record of his action.",
+        "id": "E2"
+      },
+      {
+        "name": "Paint Residue on Gloves",
+        "description": "Microscopic analysis finds pigment residues matching the fresco on a pair of gloves found near the altar.",
+        "points_toward": "guilt",
+        "truth_note": "Gloves were found discarded by a volunteer; residue indicates contact with the fresco, consistent with the theft.",
+        "id": "E3"
+      },
+      {
+        "name": "Parish Secretary's Testimony",
+        "description": "Witness claimed to have seen a dark figure enter the altar after Mass.",
+        "points_toward": "ambiguous",
+        "truth_note": "The secretary’s testimony is credible but the figure’s identity was unrecognized; she was biased in favor of the parish’s reputation.",
+        "id": "E4"
+      },
+      {
+        "name": "Reed's Backup Storage Device",
+        "description": "A USB drive found in the church’s server room contains photos of the fresco and the altar.",
+        "points_toward": "innocence",
+        "truth_note": "The drive was placed there by a volunteer for archival purposes; Reed had no access to it at the time of the theft.",
+        "id": "E5"
+      },
+      {
+        "name": "Fingerprint on the Lock",
+        "description": "A partial fingerprint was recovered from the locker’s lock, matching a resident volunteer.",
+        "points_toward": "innocence",
+        "truth_note": "The volunteer had access to the locker during the day; the print was left during a routine maintenance check.",
+        "id": "E6"
+      }
+    ],
+    "witnesses": [
+      {
+        "name": "Ellen Carter",
+        "role": "Parish Secretary",
+        "knows": "Saw a dark figure after Mass and heard muffled voices",
+        "bias": "Protecting the church’s reputation; wants to avoid scandal",
+        "will_lie": false,
+        "lie_reason": "",
+        "called_by": "prosecution"
+      },
+      {
+        "name": "Thomas Nguyen",
+        "role": "Volunteer Maintenance Worker",
+        "knows": "Was inside the church at 23:15 and saw lights turn off",
+        "bias": "Personal admiration for Reed; tends to speak positively about him",
+        "will_lie": false,
+        "lie_reason": "",
+        "called_by": "defense"
+      }
+    ]
+  },
+  "evidence_locker": [
+    {
+      "id": "E1",
+      "name": "Security Camera Footage",
+      "description": "Video from the altar camera shows a figure moving toward the fresco at 23:20."
+    },
+    {
+      "id": "E2",
+      "name": "Unlocked Motion Sensors Log",
+      "description": "Digital log shows sensors disabled between 23:10 and 23:55."
+    },
+    {
+      "id": "E3",
+      "name": "Paint Residue on Gloves",
+      "description": "Microscopic analysis finds pigment residues matching the fresco on a pair of gloves found near the altar."
+    },
+    {
+      "id": "E4",
+      "name": "Parish Secretary's Testimony",
+      "description": "Witness claimed to have seen a dark figure enter the altar after Mass."
+    },
+    {
+      "id": "E5",
+      "name": "Reed's Backup Storage Device",
+      "description": "A USB drive found in the church’s server room contains photos of the fresco and the altar."
+    },
+    {
+      "id": "E6",
+      "name": "Fingerprint on the Lock",
+      "description": "A partial fingerprint was recovered from the locker’s lock, matching a resident volunteer."
+    }
+  ],
+  "public": {
+    "title": "State v. Marcus Reed",
+    "charge": "Theft of religious property",
+    "location": "St. Agnes Catholic Church, Cedar Grove",
+    "defendant": "Marcus Reed",
+    "victim": "St. Agnes Church"
+  }
+}

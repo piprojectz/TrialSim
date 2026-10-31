@@ -1,0 +1,165 @@
+{
+  "case_id": "case_20261029_210953",
+  "created": "2026-10-29T21:09:53",
+  "model": "gpt-oss:20b",
+  "guilty": true,
+  "ground_truth": {
+    "title": "State v. Alex Rivera",
+    "crime": "Sabotage",
+    "location": "Brookfield, Midwest, Midnight Echo Music Venue",
+    "charge": "1st‑degree sabotage of property resulting in fire",
+    "defendant": {
+      "name": "Alex Rivera",
+      "age": 28,
+      "occupation": "Bartender",
+      "background": "Former mixologist with a brief stint in a small‑town bar; no prior criminal record."
+    },
+    "victim": {
+      "name": "Emily Chen",
+      "description": "Stage manager, 35, responsible for lighting and sound setup."
+    },
+    "what_really_happened": "On a Friday night, Alex Rivera was working at Midnight Echo when a sudden, intense fire broke out on the main stage, destroying the soundboard and several microphones. Investigators recovered a packet of a high‑flame‑accelerant spice that Alex had handled earlier in the evening. The fire department report indicated that faulty wiring and a missing ground wire had contributed to the spread of the blaze, but the accelerant was found on Alex’s gloves and in the stage’s ventilation system. The incident caused no injuries but resulted in significant property damage.",
+    "actual_perpetrator": "Alex Rivera",
+    "timeline": [
+      {
+        "time": "10:12 PM",
+        "event": "CCTV captured Alex moving through the backstage area."
+      },
+      {
+        "time": "10:15 PM",
+        "event": "Alex was observed leaving the bar area with a large shaker of a rare spice."
+      },
+      {
+        "time": "10:18 PM",
+        "event": "Fire alarm was manually pulled by an unidentified individual."
+      },
+      {
+        "time": "10:20 PM",
+        "event": "Fire alarm sounded; smoke alarms triggered."
+      },
+      {
+        "time": "10:22 PM",
+        "event": "Fire broke out on the main stage."
+      },
+      {
+        "time": "10:30 PM",
+        "event": "Fire department arrived and extinguished the blaze."
+      }
+    ],
+    "evidence": [
+      {
+        "name": "CCTV Footage",
+        "description": "Video recording shows Alex Rivera entering the stage area at 10:12 PM and exiting at 10:15 PM.",
+        "points_toward": "guilt",
+        "truth_note": "The footage is accurate because the camera recorded the entire backstage corridor.",
+        "id": "E1"
+      },
+      {
+        "name": "Accelerant Spice Packet",
+        "description": "A sealed packet of a rare spice used in cooking, found in Alex’s bar cart and later recovered from the stage ventilation system.",
+        "points_toward": "guilt",
+        "truth_note": "The spice packet was handled by Alex during prep and later dropped into the ventilation by accident, but the forensic analysis linked it to Alex’s gloves.",
+        "id": "E2"
+      },
+      {
+        "name": "Fire Department Wiring Report",
+        "description": "Report indicating that faulty wiring and a missing ground wire contributed to the fire’s spread.",
+        "points_toward": "innocence",
+        "truth_note": "Faulty wiring existed independently of sabotage; it made the fire more destructive but does not prove Alex’s intent.",
+        "id": "E3"
+      },
+      {
+        "name": "Manual Fire Alarm Pull",
+        "description": "Physical evidence of a manual pull of the fire alarm, with no fingerprints identified.",
+        "points_toward": "ambiguous",
+        "truth_note": "The alarm pull was done by an unidentified person; it could have been Alex or another staff member, so it does not definitively point to guilt or innocence.",
+        "id": "E4"
+      },
+      {
+        "name": "Audio Recording of Bar Area",
+        "description": "Continuous audio capture shows Alex humming a tune while preparing drinks just before the fire alarm.",
+        "points_toward": "ambiguous",
+        "truth_note": "The humming was merely a habit of Alex; no indication it related to the sabotage.",
+        "id": "E5"
+      },
+      {
+        "name": "Witness Statement - Front‑of‑House Manager",
+        "description": "Statement that Alex was on break at 10:10 PM and re-entered the bar at 10:12 PM.",
+        "points_toward": "innocence",
+        "truth_note": "The manager’s statement is accurate; it confirms Alex was in the bar and not on stage at the time the fire started.",
+        "id": "E6"
+      },
+      {
+        "name": "Witness Statement - Bartending Friend",
+        "description": "Friend claims Alex had a longstanding grudge against the venue’s owner and expressed frustration in a private conversation.",
+        "points_toward": "guilt",
+        "truth_note": "The conversation did occur; however, it was recorded in a casual setting and does not prove a direct plan to sabotage.",
+        "id": "E7"
+      }
+    ],
+    "witnesses": [
+      {
+        "name": "Marina Lopez",
+        "role": "Front‑of‑House Manager",
+        "knows": "Alex was on break from 10:10 to 10:12 PM and was back in the bar area at 10:12 PM.",
+        "bias": "protective of Alex’s reputation, wants to keep bartender image clean",
+        "will_lie": false,
+        "lie_reason": "",
+        "called_by": "defense"
+      },
+      {
+        "name": "Jared Kim",
+        "role": "Bartending Friend",
+        "knows": "Alex complained about the owner’s recent policy changes and said he was angry about being overlooked for a promotion.",
+        "bias": "friendship bias, believes Alex is a victim of unfair treatment",
+        "will_lie": false,
+        "lie_reason": "",
+        "called_by": "prosecution"
+      }
+    ]
+  },
+  "evidence_locker": [
+    {
+      "id": "E1",
+      "name": "CCTV Footage",
+      "description": "Video recording shows Alex Rivera entering the stage area at 10:12 PM and exiting at 10:15 PM."
+    },
+    {
+      "id": "E2",
+      "name": "Accelerant Spice Packet",
+      "description": "A sealed packet of a rare spice used in cooking, found in Alex’s bar cart and later recovered from the stage ventilation system."
+    },
+    {
+      "id": "E3",
+      "name": "Fire Department Wiring Report",
+      "description": "Report indicating that faulty wiring and a missing ground wire contributed to the fire’s spread."
+    },
+    {
+      "id": "E4",
+      "name": "Manual Fire Alarm Pull",
+      "description": "Physical evidence of a manual pull of the fire alarm, with no fingerprints identified."
+    },
+    {
+      "id": "E5",
+      "name": "Audio Recording of Bar Area",
+      "description": "Continuous audio capture shows Alex humming a tune while preparing drinks just before the fire alarm."
+    },
+    {
+      "id": "E6",
+      "name": "Witness Statement - Front‑of‑House Manager",
+      "description": "Statement that Alex was on break at 10:10 PM and re-entered the bar at 10:12 PM."
+    },
+    {
+      "id": "E7",
+      "name": "Witness Statement - Bartending Friend",
+      "description": "Friend claims Alex had a longstanding grudge against the venue’s owner and expressed frustration in a private conversation."
+    }
+  ],
+  "public": {
+    "title": "State v. Alex Rivera",
+    "charge": "1st‑degree sabotage of property resulting in fire",
+    "location": "Brookfield, Midwest, Midnight Echo Music Venue",
+    "defendant": "Alex Rivera",
+    "victim": "Emily Chen"
+  }
+}

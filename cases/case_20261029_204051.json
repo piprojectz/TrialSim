@@ -1,0 +1,171 @@
+{
+  "case_id": "case_20261029_204051",
+  "created": "2026-10-29T20:40:51",
+  "model": "gpt-oss:20b",
+  "guilty": true,
+  "ground_truth": {
+    "title": "State v. Thomas Keller",
+    "crime": "cyber theft",
+    "location": "Portview, Harborview Law Partners office, 12th floor server room",
+    "charge": "Unlawful access and removal of confidential client data",
+    "defendant": {
+      "name": "Thomas Keller",
+      "age": 38,
+      "occupation": "dock worker",
+      "background": "Long-time union member with no prior criminal record; recently unemployed due to dock layoffs; has outstanding debt"
+    },
+    "victim": {
+      "name": "Harborview Law Partners",
+      "description": "Mid-size law firm specializing in maritime and corporate litigation"
+    },
+    "what_really_happened": "On June 12, 2025, Thomas Keller, a dock worker, was invited to the Harborview office to assist with a temporary security audit. Using a USB drive, he accessed the firm’s internal network with stolen credentials from a phishing attack that had not yet been fully patched. He transferred encrypted client files to the drive and left it on a conference table. The IT manager discovered the drive at 12:00 pm and CCTV footage captured Keller leaving the office with the drive. Police were called at 1:00 pm, and Keller was apprehended. He later confessed via an email to his union.",
+    "actual_perpetrator": "Thomas Keller",
+    "timeline": [
+      {
+        "time": "09:00 AM",
+        "event": "Thomas Keller arrives at Harborview Law Partners for temporary audit"
+      },
+      {
+        "time": "10:00 AM",
+        "event": "Unauthorized login to internal network using stolen credentials"
+      },
+      {
+        "time": "10:30 AM",
+        "event": "Transfer of encrypted client files to USB drive"
+      },
+      {
+        "time": "12:00 PM",
+        "event": "IT manager discovers USB drive on conference table"
+      },
+      {
+        "time": "12:15 PM",
+        "event": "CCTV footage captures Keller leaving with drive"
+      },
+      {
+        "time": "01:00 PM",
+        "event": "Police called and Keller apprehended"
+      }
+    ],
+    "evidence": [
+      {
+        "name": "USB Drive",
+        "description": "Encrypted client files found on conference table",
+        "points_toward": "guilt",
+        "truth_note": "The drive was left by Keller as he exited; its presence on the table directly links him to the theft",
+        "id": "E1"
+      },
+      {
+        "name": "CCTV Footage",
+        "description": "Video showing Thomas Keller exiting the office with a USB drive",
+        "points_toward": "guilt",
+        "truth_note": "The footage records Keller’s actions and confirms he carried the drive out of the premises",
+        "id": "E2"
+      },
+      {
+        "name": "Email Log",
+        "description": "Unauthorized login recorded from IP address linked to the dock terminal Keller uses",
+        "points_toward": "guilt",
+        "truth_note": "The IP matches Keller’s dock workstation, indicating his use of stolen credentials",
+        "id": "E3"
+      },
+      {
+        "name": "IT Manager Testimony",
+        "description": "Sarah Lee reports seeing Keller leave with the USB drive and claims she was alerted by security protocols",
+        "points_toward": "guilt",
+        "bias": "wants the firm to hold Keller accountable",
+        "will_lie": false,
+        "lie_reason": "",
+        "called_by": "prosecution",
+        "id": "E4"
+      },
+      {
+        "name": "Dock Supervisor Testimony",
+        "description": "Mark Alvarez states Keller did not use any USB drive during his visit",
+        "points_toward": "innocence",
+        "bias": "friendship with Keller; prefers to protect him",
+        "will_lie": true,
+        "lie_reason": "desire to shield Keller from prosecution",
+        "called_by": "defense",
+        "id": "E5"
+      },
+      {
+        "name": "Software Anomaly Report",
+        "description": "System reboot noted at 10:15 AM classified as anomaly",
+        "points_toward": "ambiguous",
+        "truth_note": "The reboot was actually a scheduled maintenance event; the anomaly classification was an internal reporting oversight",
+        "id": "E6"
+      },
+      {
+        "name": "Password Reset Log",
+        "description": "Password changed at 10:10 AM, immediately after access began",
+        "points_toward": "guilt",
+        "truth_note": "The change was an attempt by Keller to obscure the timing of his unauthorized activity",
+        "id": "E7"
+      }
+    ],
+    "witnesses": [
+      {
+        "name": "Sarah Lee",
+        "role": "IT Manager",
+        "knows": "Saw Thomas Keller leave with USB drive; aware of security protocols",
+        "bias": "wants the firm to hold Keller accountable",
+        "will_lie": false,
+        "lie_reason": "",
+        "called_by": "prosecution"
+      },
+      {
+        "name": "Mark Alvarez",
+        "role": "Dock Supervisor",
+        "knows": "Thomas Keller was at the dock; denies use of USB drive",
+        "bias": "friendship with Keller; prefers to protect him",
+        "will_lie": true,
+        "lie_reason": "desire to shield Keller from prosecution",
+        "called_by": "defense"
+      }
+    ]
+  },
+  "evidence_locker": [
+    {
+      "id": "E1",
+      "name": "USB Drive",
+      "description": "Encrypted client files found on conference table"
+    },
+    {
+      "id": "E2",
+      "name": "CCTV Footage",
+      "description": "Video showing Thomas Keller exiting the office with a USB drive"
+    },
+    {
+      "id": "E3",
+      "name": "Email Log",
+      "description": "Unauthorized login recorded from IP address linked to the dock terminal Keller uses"
+    },
+    {
+      "id": "E4",
+      "name": "IT Manager Testimony",
+      "description": "Sarah Lee reports seeing Keller leave with the USB drive and claims she was alerted by security protocols"
+    },
+    {
+      "id": "E5",
+      "name": "Dock Supervisor Testimony",
+      "description": "Mark Alvarez states Keller did not use any USB drive during his visit"
+    },
+    {
+      "id": "E6",
+      "name": "Software Anomaly Report",
+      "description": "System reboot noted at 10:15 AM classified as anomaly"
+    },
+    {
+      "id": "E7",
+      "name": "Password Reset Log",
+      "description": "Password changed at 10:10 AM, immediately after access began"
+    }
+  ],
+  "public": {
+    "title": "State v. Thomas Keller",
+    "charge": "Unlawful access and removal of confidential client data",
+    "location": "Portview, Harborview Law Partners office, 12th floor server room",
+    "defendant": "Thomas Keller",
+    "victim": "Harborview Law Partners"
+  }
+}

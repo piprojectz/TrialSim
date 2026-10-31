@@ -1,0 +1,126 @@
+{
+  "case_id": "case_20261029_212402",
+  "run": "case_20261029_212402_110800",
+  "title": "State v. Harold Jennings",
+  "crime": "Sabotage",
+  "truth_guilty": true,
+  "verdict": "hung",
+  "rounds": 3,
+  "final_tally": {
+    "guilty": 5,
+    "not guilty": 1,
+    "undecided": 0
+  },
+  "correct": null,
+  "prosecutor": {
+    "name": "Wade Pruitt",
+    "model": "gemma4:12b"
+  },
+  "defense": {
+    "name": "Preston Whitmore",
+    "model": "mistral-small3.2:24b"
+  },
+  "judge_patience_end": 30,
+  "objections": {
+    "Wade Pruitt": {
+      "objections": 0,
+      "sustained": 0
+    },
+    "Preston Whitmore": {
+      "objections": 4,
+      "sustained": 4
+    }
+  },
+  "tokens": {
+    "by_agent": {
+      "Eleanor Price": {
+        "in": 52286,
+        "out": 1029,
+        "calls": 18,
+        "secs": 277.3
+      },
+      "Wade Pruitt": {
+        "in": 79449,
+        "out": 79520,
+        "calls": 36,
+        "secs": 894.1
+      },
+      "Preston Whitmore": {
+        "in": 73962,
+        "out": 4655,
+        "calls": 27,
+        "secs": 807.2
+      },
+      "Juror 1": {
+        "in": 49070,
+        "out": 38543,
+        "calls": 15,
+        "secs": 544.7
+      },
+      "Juror 2": {
+        "in": 49648,
+        "out": 24320,
+        "calls": 15,
+        "secs": 360.1
+      },
+      "Juror 3": {
+        "in": 50581,
+        "out": 36444,
+        "calls": 15,
+        "secs": 570.1
+      },
+      "Juror 4": {
+        "in": 50285,
+        "out": 25769,
+        "calls": 15,
+        "secs": 387.6
+      },
+      "Juror 5": {
+        "in": 49628,
+        "out": 27307,
+        "calls": 15,
+        "secs": 333.3
+      },
+      "Juror 6": {
+        "in": 49747,
+        "out": 25393,
+        "calls": 14,
+        "secs": 451.0
+      },
+      "Maria Lopez": {
+        "in": 7277,
+        "out": 4536,
+        "calls": 5,
+        "secs": 106.9
+      },
+      "Evelyn Hart": {
+        "in": 12611,
+        "out": 5308,
+        "calls": 6,
+        "secs": 131.5
+      },
+      "Thomas Reed": {
+        "in": 13717,
+        "out": 7280,
+        "calls": 5,
+        "secs": 160.5
+      }
+    },
+    "by_model": {
+      "mistral-small3.2:24b": {
+        "in": 126248,
+        "out": 5684,
+        "calls": 45,
+        "secs": 1084.5
+      },
+      "gemma4:12b": {
+        "in": 412013,
+        "out": 274420,
+        "calls": 141,
+        "secs": 3939.8
+      }
+    }
+  },
+  "started": "2026-10-31T11:08:00",
+  "minutes": 125.5
+}

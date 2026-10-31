@@ -1,0 +1,154 @@
+{
+  "case_id": "case_20261029_201642",
+  "created": "2026-10-29T20:16:42",
+  "model": "gpt-oss:20b",
+  "guilty": true,
+  "ground_truth": {
+    "title": "State v. Elias Grayson",
+    "crime": "blackmail",
+    "location": "Wheatfield, California – Oakridge Vineyard",
+    "charge": "State v. Elias Grayson, Criminal 6-12-2025: Attempted blackmail and conspiracy to defraud",
+    "defendant": {
+      "name": "Elias Grayson",
+      "age": 38,
+      "occupation": "pharmacist",
+      "background": "Owner of Grayson Pharmacy, long-time resident of Wheatfield. Known for community involvement but recently faced a financial shortfall."
+    },
+    "victim": {
+      "name": "Marjorie Caldwell",
+      "description": "Owner of Oakridge Vineyard, a 55‑year‑old vintner with a reputation for high‑quality cabernet."
+    },
+    "what_really_happened": "Elias Grayson, facing a debt to a local supplier, sent a threatening letter to Marjorie Caldwell demanding $75,000 or she would publicly release a damaging rumor that her vineyard had been testing illegal substances on its grapes. The letter contained incriminating details that only someone with inside knowledge could know. Marjorie received the letter on March 12, 2025, and reported it to the police. Grayson had recently visited the vineyard for a routine medication supply visit, where he observed Marjorie's wine labels and the supplier’s invoices, giving him the knowledge needed for the letter. The letter was found in the vineyard’s break room, addressed to Marjorie and delivered by a local courier. No physical confrontation occurred; the case hinges on whether the letter constituted blackmail.",
+    "actual_perpetrator": "Elias Grayson",
+    "timeline": [
+      {
+        "time": "March 5, 2025",
+        "event": "Elias visits Oakridge Vineyard to supply medications for the staff."
+      },
+      {
+        "time": "March 12, 2025",
+        "event": "Elias sends a blackmail letter to Marjorie via local courier."
+      },
+      {
+        "time": "March 12, 2025",
+        "event": "Marjorie receives the letter, reports to police."
+      },
+      {
+        "time": "March 15, 2025",
+        "event": "Police collect the letter from the vineyard break room."
+      }
+    ],
+    "evidence": [
+      {
+        "name": "Blackmail Letter",
+        "description": "A typed letter addressed to Marjorie Caldwell, demanding $75,000 and threatening to reveal alleged illegal substance testing. Includes specific dates and invoice numbers.",
+        "points_toward": "guilt",
+        "truth_note": "The letter was mailed by Elias and contains details that only he could have known from his recent visit.",
+        "id": "E1"
+      },
+      {
+        "name": "Courier Delivery Receipt",
+        "description": "Signed receipt from local courier confirming delivery to Oakridge Vineyard on March 12, 2025.",
+        "points_toward": "guilt",
+        "truth_note": "Courier was instructed by Elias to deliver the letter; receipt lists Elias as the sender.",
+        "id": "E2"
+      },
+      {
+        "name": "Break Room Surveillance Footage",
+        "description": "Video showing a courier entering the break room at 9:02 AM on March 12, 2025, leaving the envelope on the desk.",
+        "points_toward": "guilt",
+        "truth_note": "Footage confirms the courier physically handled the letter, corroborating the delivery receipt.",
+        "id": "E3"
+      },
+      {
+        "name": "Purchase Record of Ink Pens",
+        "description": "Sales receipt for a set of ink pens purchased by Elias from a local office supply store on March 10, 2025.",
+        "points_toward": "ambiguous",
+        "truth_note": "Pens could have been used by any staff member; not definitive for the letter's authorship.",
+        "id": "E4"
+      },
+      {
+        "name": "Phone Call Log",
+        "description": "Phone call from Elias to an unknown number on March 12, 2025, lasting 3 minutes, no recorded content.",
+        "points_toward": "ambiguous",
+        "truth_note": "Call could have been about the letter or unrelated; the unknown number is registered to a local printing company.",
+        "id": "E5"
+      },
+      {
+        "name": "Invoice for Medication Supplies",
+        "description": "Invoice from the pharmacy to the vineyard showing $2,400 worth of medication purchased on March 5, 2025.",
+        "points_toward": "innocence",
+        "truth_note": "The purchase is routine business; does not directly link to blackmail but indicates Elias's presence at the vineyard.",
+        "id": "E6"
+      }
+    ],
+    "witnesses": [
+      {
+        "name": "Olivia Hart",
+        "role": "Vineyard employee",
+        "knows": "Observed the courier leave the letter in the break room on March 12, 2025.",
+        "bias": "She works for Marjorie and feels protective of the vineyard; may be inclined to emphasize any threat.",
+        "will_lie": false,
+        "lie_reason": "",
+        "called_by": "prosecution"
+      },
+      {
+        "name": "Robert Klein",
+        "role": "Local Courier",
+        "knows": "Delivered the letter to the vineyard on March 12, 2025, signed the delivery receipt.",
+        "bias": "Has a longstanding professional relationship with Elias; prefers to keep transactions straightforward.",
+        "will_lie": false,
+        "lie_reason": "",
+        "called_by": "prosecution"
+      },
+      {
+        "name": "Lila Grant",
+        "role": "Pharmacy colleague",
+        "knows": "Saw Elias leave the pharmacy with a briefcase on March 10, 2025, and heard him mention 'need to sort out a big payment'.",
+        "bias": "Close friend of Elias; sympathetic to his financial woes.",
+        "will_lie": true,
+        "lie_reason": "Believes the claim is true and wishes to portray Elias as a victim of circumstance.",
+        "called_by": "defense"
+      }
+    ]
+  },
+  "evidence_locker": [
+    {
+      "id": "E1",
+      "name": "Blackmail Letter",
+      "description": "A typed letter addressed to Marjorie Caldwell, demanding $75,000 and threatening to reveal alleged illegal substance testing. Includes specific dates and invoice numbers."
+    },
+    {
+      "id": "E2",
+      "name": "Courier Delivery Receipt",
+      "description": "Signed receipt from local courier confirming delivery to Oakridge Vineyard on March 12, 2025."
+    },
+    {
+      "id": "E3",
+      "name": "Break Room Surveillance Footage",
+      "description": "Video showing a courier entering the break room at 9:02 AM on March 12, 2025, leaving the envelope on the desk."
+    },
+    {
+      "id": "E4",
+      "name": "Purchase Record of Ink Pens",
+      "description": "Sales receipt for a set of ink pens purchased by Elias from a local office supply store on March 10, 2025."
+    },
+    {
+      "id": "E5",
+      "name": "Phone Call Log",
+      "description": "Phone call from Elias to an unknown number on March 12, 2025, lasting 3 minutes, no recorded content."
+    },
+    {
+      "id": "E6",
+      "name": "Invoice for Medication Supplies",
+      "description": "Invoice from the pharmacy to the vineyard showing $2,400 worth of medication purchased on March 5, 2025."
+    }
+  ],
+  "public": {
+    "title": "State v. Elias Grayson",
+    "charge": "State v. Elias Grayson, Criminal 6-12-2025: Attempted blackmail and conspiracy to defraud",
+    "location": "Wheatfield, California – Oakridge Vineyard",
+    "defendant": "Elias Grayson",
+    "victim": "Marjorie Caldwell"
+  }
+}

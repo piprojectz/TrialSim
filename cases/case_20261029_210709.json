@@ -1,0 +1,153 @@
+{
+  "case_id": "case_20261029_210709",
+  "created": "2026-10-29T21:07:09",
+  "model": "gpt-oss:20b",
+  "guilty": true,
+  "ground_truth": {
+    "title": "State v. Daniel Ruiz",
+    "crime": "Jewelry Heist",
+    "location": "Townsville, Construction Site of the Skyline Tower",
+    "charge": "First‑Degree Grand Larceny of Jewelry",
+    "defendant": {
+      "name": "Daniel Ruiz",
+      "age": 32,
+      "occupation": "Personal Trainer",
+      "background": "Former competitive bodybuilder, recently began training at Skyline Tower gym."
+    },
+    "victim": {
+      "name": "Skyline Tower Development Company",
+      "description": "Owner of the construction site and supplier of high‑value jewelry used in décor."
+    },
+    "what_really_happened": "During a night shift at the Skyline Tower construction site, the security guard noticed a breach in the storage room where jewelry used for interior design was kept. Daniel Ruiz, who had been training at the tower’s gym, slipped into the storage area, concealed a case of sapphire jewelry in his gym bag, and left the site while the guard was distracted by a phone call. The guard later discovered the empty case. An alarm was triggered, but the burglar had already escaped before it went off.",
+    "actual_perpetrator": "Daniel Ruiz",
+    "timeline": [
+      {
+        "time": "21:00",
+        "event": "Guard arrives for night shift"
+      },
+      {
+        "time": "21:15",
+        "event": "Guard receives phone call and leaves workstation"
+      },
+      {
+        "time": "21:20",
+        "event": "Daniel Ruiz enters storage room, removes jewelry"
+      },
+      {
+        "time": "21:25",
+        "event": "Daniel Ruiz exits site with jewelry"
+      },
+      {
+        "time": "21:30",
+        "event": "Guard notices missing jewelry, triggers alarm"
+      },
+      {
+        "time": "21:35",
+        "event": "Security patrol reports missing jewelry to police"
+      }
+    ],
+    "evidence": [
+      {
+        "name": "Security Footage",
+        "description": "Video captured a lone individual in gym clothes entering the storage room at 21:20. The footage shows a figure that matches Daniel Ruiz’s height and build.",
+        "points_toward": "guilt",
+        "truth_note": "The footage records the actual intruder, who is Daniel Ruiz.",
+        "id": "E1"
+      },
+      {
+        "name": "Gym Bag Swab",
+        "description": "A swab taken from the inner lining of Daniel Ruiz’s gym bag tested positive for traces of glass fragments from the jewelry case.",
+        "points_toward": "guilt",
+        "truth_note": "The glass fragments are from the broken case that Daniel Ruiz removed.",
+        "id": "E2"
+      },
+      {
+        "name": "Fingerprint on Door Handle",
+        "description": "A single partial fingerprint was found on the storage room door handle, matching Daniel Ruiz’s fingerprint profile.",
+        "points_toward": "guilt",
+        "truth_note": "The fingerprint belongs to the actual intruder, Daniel Ruiz.",
+        "id": "E3"
+      },
+      {
+        "name": "Guard’s Phone Call Log",
+        "description": "The guard’s phone call log shows a 5‑minute call at 21:15 during which the guard’s audio recording is inaudible.",
+        "points_toward": "innocence",
+        "truth_note": "The call is a legitimate communication that created an opportunity for the theft, but it does not implicate any other party.",
+        "id": "E4"
+      },
+      {
+        "name": "Construction Site Layout Plan",
+        "description": "The layout plan indicates that the storage room is accessible only through the gym entrance, which Daniel Ruiz regularly used.",
+        "points_toward": "innocence",
+        "truth_note": "The plan shows a legitimate access route, but does not prove who used it.",
+        "id": "E5"
+      },
+      {
+        "name": "Anonymous Tip",
+        "description": "An anonymous tipline received a message claiming Daniel Ruiz was seen near the storage room on the night of the theft.",
+        "points_toward": "ambiguous",
+        "truth_note": "The tip may refer to a misidentification or someone else sharing Daniel’s features; the tip is unverified.",
+        "id": "E6"
+      }
+    ],
+    "witnesses": [
+      {
+        "name": "Lisa Patel",
+        "role": "Construction Site Security Guard",
+        "knows": "Observed the guard’s phone call and later discovered missing jewelry",
+        "bias": "Protects the company’s reputation; believes someone inside the company did it",
+        "will_lie": false,
+        "lie_reason": "",
+        "called_by": "prosecution"
+      },
+      {
+        "name": "Tom Bennett",
+        "role": "Gym Instructor at Skyline Tower Gym",
+        "knows": "Saw Daniel Ruiz carrying a gym bag late at night",
+        "bias": "Friend of Daniel, wants to help him avoid blame",
+        "will_lie": false,
+        "lie_reason": "",
+        "called_by": "defense"
+      }
+    ]
+  },
+  "evidence_locker": [
+    {
+      "id": "E1",
+      "name": "Security Footage",
+      "description": "Video captured a lone individual in gym clothes entering the storage room at 21:20. The footage shows a figure that matches Daniel Ruiz’s height and build."
+    },
+    {
+      "id": "E2",
+      "name": "Gym Bag Swab",
+      "description": "A swab taken from the inner lining of Daniel Ruiz’s gym bag tested positive for traces of glass fragments from the jewelry case."
+    },
+    {
+      "id": "E3",
+      "name": "Fingerprint on Door Handle",
+      "description": "A single partial fingerprint was found on the storage room door handle, matching Daniel Ruiz’s fingerprint profile."
+    },
+    {
+      "id": "E4",
+      "name": "Guard’s Phone Call Log",
+      "description": "The guard’s phone call log shows a 5‑minute call at 21:15 during which the guard’s audio recording is inaudible."
+    },
+    {
+      "id": "E5",
+      "name": "Construction Site Layout Plan",
+      "description": "The layout plan indicates that the storage room is accessible only through the gym entrance, which Daniel Ruiz regularly used."
+    },
+    {
+      "id": "E6",
+      "name": "Anonymous Tip",
+      "description": "An anonymous tipline received a message claiming Daniel Ruiz was seen near the storage room on the night of the theft."
+    }
+  ],
+  "public": {
+    "title": "State v. Daniel Ruiz",
+    "charge": "First‑Degree Grand Larceny of Jewelry",
+    "location": "Townsville, Construction Site of the Skyline Tower",
+    "defendant": "Daniel Ruiz",
+    "victim": "Skyline Tower Development Company"
+  }
+}

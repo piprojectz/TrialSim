@@ -1,0 +1,149 @@
+{
+  "case_id": "case_20261029_204120",
+  "created": "2026-10-29T20:41:20",
+  "model": "gpt-oss:20b",
+  "guilty": true,
+  "ground_truth": {
+    "title": "State v. Thomas Whitaker",
+    "crime": "cyber theft",
+    "location": "Riverside Apartments, 123 Maple Avenue, Springfield",
+    "charge": "First‑degree Computer Fraud and Theft of Personal Data",
+    "defendant": {
+      "name": "Thomas Whitaker",
+      "age": 34,
+      "occupation": "Youth Pastor",
+      "background": "Pastor of Riverside Youth Ministry, known for community outreach."
+    },
+    "victim": {
+      "name": "Emily Rios",
+      "description": "Property Manager of Riverside Apartments, responsible for tenant records."
+    },
+    "what_really_happened": "On March 12, 2024, Thomas Whitaker used his personal laptop to access the building’s shared cloud storage and exfiltrated sensitive tenant data. He had previously requested temporary administrative privileges from the property manager, which were granted via a single email. Using the granted credentials, he uploaded the data to a personal cloud account before the system logs flagged the activity and the manager was alerted. He deleted all traces from his device and claimed he was only troubleshooting a system error. The data was later discovered by the property manager, prompting the theft charge.",
+    "actual_perpetrator": "Thomas Whitaker",
+    "timeline": [
+      {
+        "time": "08:12 AM",
+        "event": "Property Manager sends email requesting temporary admin access."
+      },
+      {
+        "time": "08:15 AM",
+        "event": "Thomas Whitaker receives email and logs into cloud storage."
+      },
+      {
+        "time": "08:20 AM",
+        "event": "Data exfiltration begins; files uploaded to personal cloud."
+      },
+      {
+        "time": "08:30 AM",
+        "event": "System logs flag unusual activity; manager notified."
+      },
+      {
+        "time": "08:45 AM",
+        "event": "Thomas Whitaker deletes local copies and logs off."
+      }
+    ],
+    "evidence": [
+      {
+        "name": "Server IP Log",
+        "description": "Server logs show access from IP address 192.168.1.42 at 08:15–08:30 AM.",
+        "points_toward": "guilt",
+        "truth_note": "The IP corresponds to the WiFi network used by the defendant’s apartment.",
+        "id": "E1"
+      },
+      {
+        "name": "Email Request for Admin Access",
+        "description": "A plaintext email from Thomas to Emily dated March 12, 2024, requesting temporary admin rights.",
+        "points_toward": "guilt",
+        "truth_note": "The email was legitimately sent by Thomas and was the official authorization used to gain access.",
+        "id": "E2"
+      },
+      {
+        "name": "Device Password Reset Log",
+        "description": "Password reset request recorded on Thomas’s laptop at 07:50 AM, prior to the theft.",
+        "points_toward": "ambiguous",
+        "truth_note": "The reset was a routine maintenance action unrelated to the theft; the timing simply coincides with the event.",
+        "id": "E3"
+      },
+      {
+        "name": "CCTV Footage of Entrance",
+        "description": "Security camera captured a figure wearing a hoodie enter the building at 08:10 AM.",
+        "points_toward": "innocence",
+        "truth_note": "The figure was a delivery driver unrelated to the crime; the hoodie does not match the defendant’s known attire.",
+        "id": "E4"
+      },
+      {
+        "name": "Metadata Timestamp on Exfiltrated File",
+        "description": "File creation timestamp shows 08:22 AM, before the system flag at 08:30 AM.",
+        "points_toward": "guilt",
+        "truth_note": "The timestamp confirms the file was created during the period of unauthorized access.",
+        "id": "E5"
+      },
+      {
+        "name": "Email Denial from Defendant",
+        "description": "Thomas sent an email to Emily at 09:00 AM claiming he was troubleshooting a system error and had no intent to steal.",
+        "points_toward": "innocence",
+        "truth_note": "The email is a post‑hoc explanation; it does not negate the factual evidence of the theft.",
+        "id": "E6"
+      }
+    ],
+    "witnesses": [
+      {
+        "name": "Lara Nguyen",
+        "role": "Tenants Association Member, friend of the defendant",
+        "knows": "Saw Thomas leaving the building with a large backpack at 08:20 AM.",
+        "bias": "Personal dislike of the defendant’s past sermon; wants him convicted.",
+        "will_lie": false,
+        "lie_reason": "",
+        "called_by": "prosecution"
+      },
+      {
+        "name": "Marcus Patel",
+        "role": "IT Administrator for Riverside Apartments",
+        "knows": "Reviewed the server logs and confirmed the IP match.",
+        "bias": "Neutral, professional.",
+        "will_lie": false,
+        "lie_reason": "",
+        "called_by": "prosecution"
+      }
+    ]
+  },
+  "evidence_locker": [
+    {
+      "id": "E1",
+      "name": "Server IP Log",
+      "description": "Server logs show access from IP address 192.168.1.42 at 08:15–08:30 AM."
+    },
+    {
+      "id": "E2",
+      "name": "Email Request for Admin Access",
+      "description": "A plaintext email from Thomas to Emily dated March 12, 2024, requesting temporary admin rights."
+    },
+    {
+      "id": "E3",
+      "name": "Device Password Reset Log",
+      "description": "Password reset request recorded on Thomas’s laptop at 07:50 AM, prior to the theft."
+    },
+    {
+      "id": "E4",
+      "name": "CCTV Footage of Entrance",
+      "description": "Security camera captured a figure wearing a hoodie enter the building at 08:10 AM."
+    },
+    {
+      "id": "E5",
+      "name": "Metadata Timestamp on Exfiltrated File",
+      "description": "File creation timestamp shows 08:22 AM, before the system flag at 08:30 AM."
+    },
+    {
+      "id": "E6",
+      "name": "Email Denial from Defendant",
+      "description": "Thomas sent an email to Emily at 09:00 AM claiming he was troubleshooting a system error and had no intent to steal."
+    }
+  ],
+  "public": {
+    "title": "State v. Thomas Whitaker",
+    "charge": "First‑degree Computer Fraud and Theft of Personal Data",
+    "location": "Riverside Apartments, 123 Maple Avenue, Springfield",
+    "defendant": "Thomas Whitaker",
+    "victim": "Emily Rios"
+  }
+}

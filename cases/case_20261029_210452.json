@@ -1,0 +1,161 @@
+{
+  "case_id": "case_20261029_210452",
+  "created": "2026-10-29T21:04:52",
+  "model": "gpt-oss:20b",
+  "guilty": true,
+  "ground_truth": {
+    "title": "State v. Michael Ortega",
+    "crime": "cyber theft",
+    "location": "Port Haven, Marina Dock 3",
+    "charge": "Computer Fraud and Unauthorized Access to Information Systems",
+    "defendant": {
+      "name": "Michael Ortega",
+      "age": 42,
+      "occupation": "pharmacist",
+      "background": "Owner of the dockside pharmacy \"Maritime Meds\" and longtime resident of Port Haven"
+    },
+    "victim": {
+      "name": "Eleanor Voss",
+      "description": "Owner of Port Haven Marina, 55, responsible for client contracts and dock operations"
+    },
+    "what_really_happened": "On the evening of May 9, 2024, Michael Ortega accessed the marina’s client database through his office laptop, using an administrative account he was not authorized to use. He copied sensitive client information onto a USB drive and later transferred it to an external server. The marina’s IT system logged an unauthorized login from Ortega’s office IP address. The stolen data was subsequently sold on a dark‑web forum the following week. Ortega was caught by the police after the marina notified authorities of the breach.",
+    "actual_perpetrator": "Michael Ortega",
+    "timeline": [
+      {
+        "time": "2024-05-09 18:00",
+        "event": "Ortega logs into marina database using administrative credentials"
+      },
+      {
+        "time": "2024-05-09 18:15",
+        "event": "Ortega copies client records to USB drive"
+      },
+      {
+        "time": "2024-05-09 18:45",
+        "event": "Ortega transfers data to external server"
+      },
+      {
+        "time": "2024-05-09 20:00",
+        "event": "Marina IT logs unauthorized access from Ortega's office IP"
+      },
+      {
+        "time": "2024-05-10 09:30",
+        "event": "Marina owner Eleanor Voss reports data breach to police"
+      }
+    ],
+    "evidence": [
+      {
+        "name": "Hard Drive Copy",
+        "description": "Investigators recovered a copy of the marina database from Ortega’s office laptop showing modified timestamps and deleted records",
+        "points_toward": "guilt",
+        "truth_note": "The hard drive was physically seized from Ortega’s office, proving his device held the corrupted data",
+        "id": "E1"
+      },
+      {
+        "name": "Surveillance Footage",
+        "description": "CCTV from Dock 3 shows Ortega entering the marina office alone at 18:05 and exiting with a sealed USB drive",
+        "points_toward": "guilt",
+        "truth_note": "Footage captured Ortega’s movements directly linking him to the time of the unauthorized access",
+        "id": "E2"
+      },
+      {
+        "name": "IP Log File",
+        "description": "Marina server logs an unauthorized login at 18:00 from the IP address registered to Ortega’s pharmacy",
+        "points_toward": "guilt",
+        "truth_note": "The IP address was tied to Ortega’s office network, confirming his device performed the access",
+        "id": "E3"
+      },
+      {
+        "name": "Phishing Email Draft",
+        "description": "A draft of a phishing email was found in Ortega’s personal Gmail, addressed to a marina employee",
+        "points_toward": "guilt",
+        "truth_note": "The email draft contains a link identical to the one used to download the stolen data, indicating premeditation",
+        "id": "E4"
+      },
+      {
+        "name": "Dockworker Testimony",
+        "description": "Witness statement from dockworker Lisa Marquez noting Ortega’s presence near the office at the time of the breach",
+        "points_toward": "guilt",
+        "truth_note": "Lisa saw Ortega walking toward the office after hours and did not observe any other suspicious activity",
+        "id": "E5"
+      },
+      {
+        "name": "Security Guard Alibi",
+        "description": "Security guard records show the guard on duty at Dock 3 had a scheduled break from 17:45 to 18:30, allowing Ortega access",
+        "points_toward": "innocence",
+        "truth_note": "The guard’s break coincides with the breach window, indicating a gap in supervision rather than evidence of Ortega’s innocence",
+        "id": "E6"
+      },
+      {
+        "name": "USB Drive Physical Analysis",
+        "description": "USB drive seized from Ortega’s office contains a forensic image of the stolen database",
+        "points_toward": "ambiguous",
+        "truth_note": "While the USB drive belongs to Ortega, the forensic image could have been inserted by a third party; the chain of custody for the drive is well documented",
+        "id": "E7"
+      }
+    ],
+    "witnesses": [
+      {
+        "name": "Lisa Marquez",
+        "role": "dockworker and competitor of Ortega’s pharmacy",
+        "knows": "Saw Ortega near the office at 18:00 and heard no other individuals in the vicinity",
+        "bias": "Competitive bias due to business rivalry; may emphasize Ortega’s suspicious presence",
+        "will_lie": false,
+        "lie_reason": "",
+        "called_by": "prosecution"
+      },
+      {
+        "name": "Thomas Riley",
+        "role": "security guard for Port Haven Marina",
+        "knows": "The guard’s break schedule and that the security camera feed was inactive during 18:05–18:20",
+        "bias": "Neutral; duty to report factual operations",
+        "will_lie": false,
+        "lie_reason": "",
+        "called_by": "defense"
+      }
+    ]
+  },
+  "evidence_locker": [
+    {
+      "id": "E1",
+      "name": "Hard Drive Copy",
+      "description": "Investigators recovered a copy of the marina database from Ortega’s office laptop showing modified timestamps and deleted records"
+    },
+    {
+      "id": "E2",
+      "name": "Surveillance Footage",
+      "description": "CCTV from Dock 3 shows Ortega entering the marina office alone at 18:05 and exiting with a sealed USB drive"
+    },
+    {
+      "id": "E3",
+      "name": "IP Log File",
+      "description": "Marina server logs an unauthorized login at 18:00 from the IP address registered to Ortega’s pharmacy"
+    },
+    {
+      "id": "E4",
+      "name": "Phishing Email Draft",
+      "description": "A draft of a phishing email was found in Ortega’s personal Gmail, addressed to a marina employee"
+    },
+    {
+      "id": "E5",
+      "name": "Dockworker Testimony",
+      "description": "Witness statement from dockworker Lisa Marquez noting Ortega’s presence near the office at the time of the breach"
+    },
+    {
+      "id": "E6",
+      "name": "Security Guard Alibi",
+      "description": "Security guard records show the guard on duty at Dock 3 had a scheduled break from 17:45 to 18:30, allowing Ortega access"
+    },
+    {
+      "id": "E7",
+      "name": "USB Drive Physical Analysis",
+      "description": "USB drive seized from Ortega’s office contains a forensic image of the stolen database"
+    }
+  ],
+  "public": {
+    "title": "State v. Michael Ortega",
+    "charge": "Computer Fraud and Unauthorized Access to Information Systems",
+    "location": "Port Haven, Marina Dock 3",
+    "defendant": "Michael Ortega",
+    "victim": "Eleanor Voss"
+  }
+}

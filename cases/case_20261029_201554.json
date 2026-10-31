@@ -1,0 +1,149 @@
+{
+  "case_id": "case_20261029_201554",
+  "created": "2026-10-29T20:15:54",
+  "model": "gpt-oss:20b",
+  "guilty": true,
+  "ground_truth": {
+    "title": "State v. Marcus Ellison",
+    "crime": "Extortion",
+    "location": "Midland, Heartland General Hospital, Financial Services Department",
+    "charge": "First‑degree extortion of a medical facility",
+    "defendant": {
+      "name": "Marcus Ellison",
+      "age": 42,
+      "occupation": "Accountant",
+      "background": "Long‑time employee at Heartland General Hospital, former CPA, promoted to senior finance manager in 2017; known for meticulous budgeting but has a history of financial disputes with staff"
+    },
+    "victim": {
+      "name": "Heartland General Hospital",
+      "description": "Publicly funded community hospital with annual budget of $120 million"
+    },
+    "what_really_happened": "In early March, Marcus Ellison discovered an unauthorized $350,000 expense claim filed by a colleague. Rather than report it, he demanded that the hospital’s Chief Financial Officer (CFO) personally cover the discrepancy or face a fabricated lawsuit threatening to expose a minor regulatory violation. The CFO complied, paying $50,000 in cash to Marcus, who then returned the money to the original claimant. The CFO later realized the extortion and reported Marcus to the police. Marcus was arrested on March 12, 2024, and charged with extortion.",
+    "actual_perpetrator": "Marcus Ellison",
+    "timeline": [
+      {
+        "time": "March 1, 2024",
+        "event": "Marcus discovers unauthorized expense claim"
+      },
+      {
+        "time": "March 3, 2024",
+        "event": "Marcus demands payment from CFO"
+      },
+      {
+        "time": "March 4, 2024",
+        "event": "CFO pays $50,000 to Marcus"
+      },
+      {
+        "time": "March 10, 2024",
+        "event": "CFO realizes extortion, reports incident"
+      },
+      {
+        "time": "March 12, 2024",
+        "event": "Marcus arrested"
+      }
+    ],
+    "evidence": [
+      {
+        "name": "Bank Transfer Record",
+        "description": "Electronic record of $50,000 transfer from CFO’s personal account to Marcus Ellison’s corporate account on March 4, 2024",
+        "points_toward": "guilt",
+        "truth_note": "The transfer directly links Marcus to the payment requested; the account details match those used by Marcus during his tenure",
+        "id": "E1"
+      },
+      {
+        "name": "CFO’s Testimony Transcript",
+        "description": "Recording of CFO’s sworn statement detailing the extortion request and subsequent payment",
+        "points_toward": "guilt",
+        "truth_note": "The CFO’s account is a direct source of the extortion claim, corroborating the timeline and the demands made by Marcus",
+        "id": "E2"
+      },
+      {
+        "name": "CFO’s Office Email Correspondence",
+        "description": "Emails between CFO and Marcus discussing the “sensitive matter” and the “situation” requiring “discretion”",
+        "points_toward": "guilt",
+        "truth_note": "The email content reflects a conversation about the undisclosed discrepancy and uses language implying coercion",
+        "id": "E3"
+      },
+      {
+        "name": "Surveillance Footage",
+        "description": "Security camera footage of CFO entering Marcus’s office on March 3, 2024, showing a brief conversation",
+        "points_toward": "ambiguous",
+        "truth_note": "The footage captures the CFO’s presence but does not show any verbal exchange; the conversation could have been about routine budgeting concerns",
+        "id": "E4"
+      },
+      {
+        "name": "Hospital Payroll Ledger",
+        "description": "Ledger entry indicating a $350,000 expense approved by an employee with an error flag; no record of reimbursement to that employee",
+        "points_toward": "innocence",
+        "truth_note": "The ledger shows an anomaly but the error flag was added after the payment, indicating the system was used to conceal the discrepancy; the ledger alone does not prove Marcus’s intent",
+        "id": "E5"
+      },
+      {
+        "name": "Witness Statement of Nurse Lydia Park",
+        "description": "Statement that Nurse Park heard Marcus’s name mentioned in a private conversation about finances",
+        "points_toward": "ambiguous",
+        "truth_note": "The statement is based on overheard audio; no direct reference to extortion is present, making it possible that Marcus was discussing routine budget concerns",
+        "id": "E6"
+      }
+    ],
+    "witnesses": [
+      {
+        "name": "CFO Alicia Monroe",
+        "role": "Chief Financial Officer of Heartland General Hospital",
+        "knows": "Details of the extortion request and payment, timeline of events",
+        "bias": "Professional obligation to expose wrongdoing, personal stake in protecting hospital reputation",
+        "will_lie": false,
+        "lie_reason": "",
+        "called_by": "prosecution"
+      },
+      {
+        "name": "Nurse Lydia Park",
+        "role": "Senior Nurse, department finance liaison",
+        "knows": "Hears Marcus’s name during private conversation about finances",
+        "bias": "Personal dislike for Marcus due to prior billing disputes",
+        "will_lie": true,
+        "lie_reason": "May exaggerate Marcus’s behavior to protect her own standing",
+        "called_by": "defense"
+      }
+    ]
+  },
+  "evidence_locker": [
+    {
+      "id": "E1",
+      "name": "Bank Transfer Record",
+      "description": "Electronic record of $50,000 transfer from CFO’s personal account to Marcus Ellison’s corporate account on March 4, 2024"
+    },
+    {
+      "id": "E2",
+      "name": "CFO’s Testimony Transcript",
+      "description": "Recording of CFO’s sworn statement detailing the extortion request and subsequent payment"
+    },
+    {
+      "id": "E3",
+      "name": "CFO’s Office Email Correspondence",
+      "description": "Emails between CFO and Marcus discussing the “sensitive matter” and the “situation” requiring “discretion”"
+    },
+    {
+      "id": "E4",
+      "name": "Surveillance Footage",
+      "description": "Security camera footage of CFO entering Marcus’s office on March 3, 2024, showing a brief conversation"
+    },
+    {
+      "id": "E5",
+      "name": "Hospital Payroll Ledger",
+      "description": "Ledger entry indicating a $350,000 expense approved by an employee with an error flag; no record of reimbursement to that employee"
+    },
+    {
+      "id": "E6",
+      "name": "Witness Statement of Nurse Lydia Park",
+      "description": "Statement that Nurse Park heard Marcus’s name mentioned in a private conversation about finances"
+    }
+  ],
+  "public": {
+    "title": "State v. Marcus Ellison",
+    "charge": "First‑degree extortion of a medical facility",
+    "location": "Midland, Heartland General Hospital, Financial Services Department",
+    "defendant": "Marcus Ellison",
+    "victim": "Heartland General Hospital"
+  }
+}

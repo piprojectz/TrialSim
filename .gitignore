@@ -1,0 +1,12 @@
+# Python
+__pycache__/
+*.pyc
+venv/
+.venv/
+
+# Run output: keep only the showcase run
+runs/*
+!runs/case_20261029_212402_110800/
+
+# Secrets
+.env
