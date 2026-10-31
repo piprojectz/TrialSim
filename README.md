@@ -1,8 +1,11 @@
-﻿# TrialSim
+# TrialSim
 
 A multi-agent courtroom simulation running entirely on local LLMs through Ollama. A generator invents a crime with a hidden ground truth, then an AI prosecutor, defense attorney, judge, witnesses, and a six-person jury try the case. Every agent's **private thoughts are logged before and after each turn**, so you can compare what they said in court with what they actually believed.
 
 Both lawyers are told to **win at all costs**, regardless of whether the defendant did it.
+
+### ▶ [Watch a full trial](https://piprojectz.github.io/TrialSim/runs/case_20261029_212402_110800/report.html)
+Every statement, objection, private thought, and juror ballot from one complete run.
 
 ## What makes it interesting
 
@@ -22,7 +25,7 @@ Both lawyers are told to **win at all costs**, regardless of whether the defenda
 | Prosecutor | Wade Pruitt, East Texas drawl, plays dumb then goes for the throat | `gemma4:12b` |
 | Defense | Preston Whitmore III, polished Houston big-firm attorney | `mistral-small3.2:24b` |
 | Judge | Eleanor Price, strict and extremely short-tempered | `mistral-small3.2:24b` |
-| Witnesses \& jurors | Generated per case; jurors drawn from 8 personas | `gemma4:12b` |
+| Witnesses & jurors | Generated per case; jurors drawn from 8 personas | `gemma4:12b` |
 
 ## Trial flow
 
@@ -48,6 +51,6 @@ Each run writes to `runs/<case>_<time>/`:
 - `result.json`: verdict, ground truth, objections, judge patience, tokens, runtime
 - `report.html`: a readable trial report with flags and the jury table
 
-An example run is included in [`runs/case_20261029_212402_110800`](runs/case_20261029_212402_110800).
+The example run's files are in [`runs/case_20261029_212402_110800`](runs/case_20261029_212402_110800), and its report is viewable [here](https://piprojectz.github.io/TrialSim/runs/case_20261029_212402_110800/report.html).
 
 *All cases, people, and events are fictional.*
