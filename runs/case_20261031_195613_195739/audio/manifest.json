@@ -1,0 +1,482 @@
+{
+ "0": {
+  "file": "b000_7bdea609b85a.mp3",
+  "secs": 9.65,
+  "voice": "af_bella"
+ },
+ "1": {
+  "file": "b001_33bfe54ac28a.mp3",
+  "secs": 29.7,
+  "voice": "af_bella"
+ },
+ "2": {
+  "file": "b002_8702dcaf602d.mp3",
+  "secs": 50.9,
+  "voice": "chatterbox:wade"
+ },
+ "3": {
+  "file": "b003_b9672bb5da87.mp3",
+  "secs": 56.9,
+  "voice": "chatterbox:wade"
+ },
+ "4": {
+  "file": "b004_7368c61a5812.mp3",
+  "secs": 43.42,
+  "voice": "bm_george"
+ },
+ "5": {
+  "file": "b005_3a3b9c45d4ac.mp3",
+  "secs": 66.65,
+  "voice": "bm_george"
+ },
+ "6": {
+  "file": "b006_204bc7477e4c.mp3",
+  "secs": 46.54,
+  "voice": "chatterbox:wade"
+ },
+ "7": {
+  "file": "b007_ed40833d4277.mp3",
+  "secs": 38.27,
+  "voice": "bm_george"
+ },
+ "9": {
+  "file": "b009_75a8faad6176.mp3",
+  "secs": 3.75,
+  "voice": "af_bella"
+ },
+ "10": {
+  "file": "b010_845101c4bbbf.mp3",
+  "secs": 50.05,
+  "voice": "af_nicole"
+ },
+ "11": {
+  "file": "b011_65d8ab5c3c31.mp3",
+  "secs": 45.92,
+  "voice": "chatterbox:wade"
+ },
+ "12": {
+  "file": "b012_7b873827f265.mp3",
+  "secs": 10.4,
+  "voice": "chatterbox:wade"
+ },
+ "13": {
+  "file": "b013_4778c1063cbc.mp3",
+  "secs": 37.95,
+  "voice": "af_nicole"
+ },
+ "14": {
+  "file": "b014_f5f96972808a.mp3",
+  "secs": 14.8,
+  "voice": "chatterbox:wade"
+ },
+ "15": {
+  "file": "b015_f0ade10ad911.mp3",
+  "secs": 36.75,
+  "voice": "af_nicole"
+ },
+ "16": {
+  "file": "b016_a67a074b7c49.mp3",
+  "secs": 57.42,
+  "voice": "chatterbox:wade"
+ },
+ "17": {
+  "file": "b017_1e8fd7cd5d77.mp3",
+  "secs": 41.85,
+  "voice": "bm_george"
+ },
+ "18": {
+  "file": "b018_4c03ff146206.mp3",
+  "secs": 18.27,
+  "voice": "bm_george"
+ },
+ "19": {
+  "file": "b019_91f61e7c9085.mp3",
+  "secs": 23.5,
+  "voice": "chatterbox:wade"
+ },
+ "20": {
+  "file": "b020_417d5800ebaf.mp3",
+  "secs": 4.64,
+  "voice": "chatterbox:wade"
+ },
+ "21": {
+  "file": "b021_39b97de6c956.mp3",
+  "secs": 7.7,
+  "voice": "af_bella"
+ },
+ "22": {
+  "file": "b022_46e59ca89035.mp3",
+  "secs": 13.85,
+  "voice": "bm_george"
+ },
+ "23": {
+  "file": "b023_9e7719e518ec.mp3",
+  "secs": 38.2,
+  "voice": "af_nicole"
+ },
+ "24": {
+  "file": "b024_1c8c8626ab1a.mp3",
+  "secs": 41.77,
+  "voice": "bm_george"
+ },
+ "25": {
+  "file": "b025_2153bf60686e.mp3",
+  "secs": 57.5,
+  "voice": "af_nicole"
+ },
+ "27": {
+  "file": "b027_bce4983a295d.mp3",
+  "secs": 3.48,
+  "voice": "af_bella"
+ },
+ "28": {
+  "file": "b028_750e886230ac.mp3",
+  "secs": 37.88,
+  "voice": "am_adam"
+ },
+ "29": {
+  "file": "b029_ca0c1a88da0a.mp3",
+  "secs": 61.52,
+  "voice": "chatterbox:wade"
+ },
+ "30": {
+  "file": "b030_ed1fd4b735a8.mp3",
+  "secs": 16.48,
+  "voice": "chatterbox:wade"
+ },
+ "31": {
+  "file": "b031_cc953e874d64.mp3",
+  "secs": 25.6,
+  "voice": "am_adam"
+ },
+ "32": {
+  "file": "b032_ff6a3c1d9cf0.mp3",
+  "secs": 16.28,
+  "voice": "chatterbox:wade"
+ },
+ "33": {
+  "file": "b033_a13534e6af31.mp3",
+  "secs": 21.3,
+  "voice": "am_adam"
+ },
+ "34": {
+  "file": "b034_c9db58a92317.mp3",
+  "secs": 56.34,
+  "voice": "chatterbox:wade"
+ },
+ "35": {
+  "file": "b035_1ccb40e9ee66.mp3",
+  "secs": 39.6,
+  "voice": "bm_george"
+ },
+ "36": {
+  "file": "b036_a532cb8c96cd.mp3",
+  "secs": 17.4,
+  "voice": "bm_george"
+ },
+ "37": {
+  "file": "b037_580c25720d4c.mp3",
+  "secs": 26.15,
+  "voice": "am_adam"
+ },
+ "38": {
+  "file": "b038_4a2eff539b38.mp3",
+  "secs": 20.02,
+  "voice": "bm_george"
+ },
+ "39": {
+  "file": "b039_04fc211ef71d.mp3",
+  "secs": 12.03,
+  "voice": "af_bella"
+ },
+ "40": {
+  "file": "b040_02db23b50430.mp3",
+  "secs": 25.52,
+  "voice": "am_adam"
+ },
+ "41": {
+  "file": "b041_96dd4ba3fda2.mp3",
+  "secs": 53.45,
+  "voice": "bm_george"
+ },
+ "42": {
+  "file": "b042_90ef075c1ba4.mp3",
+  "secs": 50.05,
+  "voice": "am_adam"
+ },
+ "44": {
+  "file": "b044_ae38242e9e70.mp3",
+  "secs": 4.42,
+  "voice": "af_bella"
+ },
+ "45": {
+  "file": "b045_760100409ddf.mp3",
+  "secs": 3.23,
+  "voice": "af_bella"
+ },
+ "46": {
+  "file": "b046_0b20e4b47411.mp3",
+  "secs": 37.35,
+  "voice": "af_sarah"
+ },
+ "47": {
+  "file": "b047_1b021f24cb4f.mp3",
+  "secs": 39.77,
+  "voice": "bm_george"
+ },
+ "48": {
+  "file": "b048_c9d1db5159ee.mp3",
+  "secs": 11.1,
+  "voice": "bm_george"
+ },
+ "49": {
+  "file": "b049_231a9b1cf433.mp3",
+  "secs": 32.0,
+  "voice": "af_sarah"
+ },
+ "50": {
+  "file": "b050_f67cab188f80.mp3",
+  "secs": 10.32,
+  "voice": "bm_george"
+ },
+ "51": {
+  "file": "b051_aa7a05d75097.mp3",
+  "secs": 20.58,
+  "voice": "chatterbox:wade"
+ },
+ "52": {
+  "file": "b052_1a8517265888.mp3",
+  "secs": 3.84,
+  "voice": "chatterbox:wade"
+ },
+ "53": {
+  "file": "b053_489eddfab6a9.mp3",
+  "secs": 5.3,
+  "voice": "af_bella"
+ },
+ "54": {
+  "file": "b054_a6f10f320883.mp3",
+  "secs": 53.3,
+  "voice": "bm_george"
+ },
+ "55": {
+  "file": "b055_80f8131ace46.mp3",
+  "secs": 48.34,
+  "voice": "chatterbox:wade"
+ },
+ "56": {
+  "file": "b056_489133a5c699.mp3",
+  "secs": 13.92,
+  "voice": "chatterbox:wade"
+ },
+ "57": {
+  "file": "b057_8ae87eb4257c.mp3",
+  "secs": 14.28,
+  "voice": "bm_george"
+ },
+ "58": {
+  "file": "b058_31157a73ce18.mp3",
+  "secs": 3.7,
+  "voice": "bm_george"
+ },
+ "59": {
+  "file": "b059_8371f3942933.mp3",
+  "secs": 5.5,
+  "voice": "af_bella"
+ },
+ "60": {
+  "file": "b060_4cbf753e3676.mp3",
+  "secs": 18.94,
+  "voice": "chatterbox:wade"
+ },
+ "61": {
+  "file": "b061_0f04d5bba805.mp3",
+  "secs": 9.4,
+  "voice": "af_bella"
+ },
+ "62": {
+  "file": "b062_c82663c40b54.mp3",
+  "secs": 27.15,
+  "voice": "af_sarah"
+ },
+ "63": {
+  "file": "b063_f48940119f84.mp3",
+  "secs": 46.82,
+  "voice": "chatterbox:wade"
+ },
+ "64": {
+  "file": "b064_ea4108b27a85.mp3",
+  "secs": 45.48,
+  "voice": "af_sarah"
+ },
+ "66": {
+  "file": "b066_3c0faccd4c01.mp3",
+  "secs": 3.7,
+  "voice": "af_bella"
+ },
+ "67": {
+  "file": "b067_ec5dbc636258.mp3",
+  "secs": 55.72,
+  "voice": "chatterbox:wade"
+ },
+ "68": {
+  "file": "b068_2470df0edac5.mp3",
+  "secs": 78.32,
+  "voice": "chatterbox:wade"
+ },
+ "69": {
+  "file": "b069_b85816c6c0e1.mp3",
+  "secs": 42.5,
+  "voice": "bm_george"
+ },
+ "70": {
+  "file": "b070_697e43001d0a.mp3",
+  "secs": 85.95,
+  "voice": "bm_george"
+ },
+ "71": {
+  "file": "b071_029215d174c6.mp3",
+  "secs": 45.84,
+  "voice": "chatterbox:wade"
+ },
+ "72": {
+  "file": "b072_4365dcc26efe.mp3",
+  "secs": 39.68,
+  "voice": "chatterbox:wade"
+ },
+ "73": {
+  "file": "b073_6ebe261e242e.mp3",
+  "secs": 68.52,
+  "voice": "chatterbox:wade"
+ },
+ "74": {
+  "file": "b074_c6b1b537e3bb.mp3",
+  "secs": 58.02,
+  "voice": "bm_george"
+ },
+ "76": {
+  "file": "b076_5134a74c2443.mp3",
+  "secs": 31.77,
+  "voice": "af_bella"
+ },
+ "77": {
+  "file": "b077_4974d6088423.mp3",
+  "secs": 37.98,
+  "voice": "af_bella"
+ },
+ "78": {
+  "file": "b078_fcabe4abc29e.mp3",
+  "secs": 5.2,
+  "voice": "af_bella"
+ },
+ "80": {
+  "file": "b080_3de1898fc0a6.mp3",
+  "secs": 19.77,
+  "voice": "af_jessica"
+ },
+ "81": {
+  "file": "b081_7b3c703b70a7.mp3",
+  "secs": 28.0,
+  "voice": "af_aoede"
+ },
+ "82": {
+  "file": "b082_6d72b9ac34ed.mp3",
+  "secs": 25.8,
+  "voice": "am_echo"
+ },
+ "83": {
+  "file": "b083_99b7da222ee8.mp3",
+  "secs": 21.5,
+  "voice": "am_liam"
+ },
+ "84": {
+  "file": "b084_723f706f25ff.mp3",
+  "secs": 21.95,
+  "voice": "am_puck"
+ },
+ "85": {
+  "file": "b085_819dbf09f7c3.mp3",
+  "secs": 27.3,
+  "voice": "af_kore"
+ },
+ "87": {
+  "file": "b087_62605f99066a.mp3",
+  "secs": 19.38,
+  "voice": "af_jessica"
+ },
+ "88": {
+  "file": "b088_6e28f8c5c889.mp3",
+  "secs": 30.05,
+  "voice": "am_echo"
+ },
+ "89": {
+  "file": "b089_75cbd1cdbbb7.mp3",
+  "secs": 21.32,
+  "voice": "af_kore"
+ },
+ "90": {
+  "file": "b090_19954eae44ce.mp3",
+  "secs": 21.02,
+  "voice": "am_puck"
+ },
+ "91": {
+  "file": "b091_7200db984051.mp3",
+  "secs": 20.55,
+  "voice": "am_liam"
+ },
+ "92": {
+  "file": "b092_8756235e456e.mp3",
+  "secs": 23.48,
+  "voice": "af_aoede"
+ },
+ "94": {
+  "file": "b094_c188b511e40d.mp3",
+  "secs": 18.07,
+  "voice": "af_bella"
+ },
+ "95": {
+  "file": "b095_01e1830ca891.mp3",
+  "secs": 18.85,
+  "voice": "af_jessica"
+ },
+ "96": {
+  "file": "b096_0918b4f9a14f.mp3",
+  "secs": 22.15,
+  "voice": "am_liam"
+ },
+ "97": {
+  "file": "b097_36f45f64bcf6.mp3",
+  "secs": 21.05,
+  "voice": "af_kore"
+ },
+ "98": {
+  "file": "b098_e3cfb475efc5.mp3",
+  "secs": 23.5,
+  "voice": "af_aoede"
+ },
+ "99": {
+  "file": "b099_9e4cf82fc311.mp3",
+  "secs": 32.05,
+  "voice": "am_echo"
+ },
+ "100": {
+  "file": "b100_06839a9eb845.mp3",
+  "secs": 21.25,
+  "voice": "am_puck"
+ },
+ "102": {
+  "file": "b102_9a7b44073037.mp3",
+  "secs": 7.72,
+  "voice": "af_bella"
+ },
+ "103": {
+  "file": "b103_37c684632169.mp3",
+  "secs": 36.36,
+  "voice": "chatterbox:wade"
+ },
+ "104": {
+  "file": "b104_ee3fc2057190.mp3",
+  "secs": 26.2,
+  "voice": "bm_george"
+ }
+}

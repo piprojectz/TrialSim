@@ -184,6 +184,12 @@ Requirements:
   Set called_by to the side their testimony helps. Ideally each side gets at least one witness.
 - Everything must be consistent with what_really_happened.
 - Use realistic names. Keep it grounded, no supernatural elements.
+- The CRIME premise is the heart of the story: its specific details must drive the plot,
+  the evidence and the witnesses. If the setting doesn't fit the crime, adapt the setting.
+- One clear, physically consistent sequence of events (e.g. ONE cause of death or harm).
+- Evidence items are physical or documentary things (objects, records, footage, lab results).
+  Witness statements and testimony are NOT evidence items; that's what the witnesses are for.
+- Keep the evidence balanced: no more than about half the items may point toward guilt.
 
 Return JSON in exactly this shape:
 {SCHEMA}
@@ -208,6 +214,16 @@ def validate(case: dict, guilty: bool) -> list[str]:
     sides = " | ".join(str(e.get("points_toward", "")).lower() for e in ev)
     if "guilt" not in sides or "innoc" not in sides:
         errs.append("evidence must include items pointing to guilt AND innocence")
+    n_guilt = sum(str(e.get("points_toward", "")).lower().startswith("guilt") for e in ev)
+    if ev and n_guilt > (len(ev) + 1) // 2:
+        errs.append(f"{n_guilt} of {len(ev)} evidence items point to guilt; rebalance so the case is "
+                    "genuinely arguable (more innocence or ambiguous items)")
+    said = [e.get("name", "?") for e in ev
+            if re.search(r"\b(statement|testimony|testif|interview|eyewitness|account|told police)\b",
+                         f"{e.get('name', '')} {e.get('description', '')}", re.I)]
+    if said:
+        errs.append("evidence items must be physical or documentary, not what someone said; "
+                    f"move these into witness testimony instead: {', '.join(said)}")
 
     wits = case["witnesses"]
     if not (2 <= len(wits) <= 3):

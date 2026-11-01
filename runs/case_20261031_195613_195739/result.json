@@ -1,0 +1,126 @@
+{
+  "case_id": "case_20261031_195613",
+  "run": "case_20261031_195613_195739",
+  "title": "State v. Caleb Jensen",
+  "crime": "murder",
+  "truth_guilty": false,
+  "verdict": "hung",
+  "rounds": 3,
+  "final_tally": {
+    "guilty": 5,
+    "not guilty": 1,
+    "undecided": 0
+  },
+  "correct": null,
+  "prosecutor": {
+    "name": "Wade Pruitt",
+    "model": "gemma4:12b"
+  },
+  "defense": {
+    "name": "Preston Whitmore",
+    "model": "mistral-small3.2:24b"
+  },
+  "judge_patience_end": 43,
+  "objections": {
+    "Wade Pruitt": {
+      "objections": 2,
+      "sustained": 2
+    },
+    "Preston Whitmore": {
+      "objections": 1,
+      "sustained": 1
+    }
+  },
+  "tokens": {
+    "by_agent": {
+      "Eleanor Price": {
+        "in": 30146,
+        "out": 898,
+        "calls": 11,
+        "secs": 211.8
+      },
+      "Wade Pruitt": {
+        "in": 75138,
+        "out": 69485,
+        "calls": 38,
+        "secs": 841.2
+      },
+      "Preston Whitmore": {
+        "in": 70786,
+        "out": 4102,
+        "calls": 27,
+        "secs": 726.2
+      },
+      "Juror 1": {
+        "in": 48090,
+        "out": 30271,
+        "calls": 15,
+        "secs": 365.3
+      },
+      "Juror 2": {
+        "in": 47110,
+        "out": 28706,
+        "calls": 13,
+        "secs": 527.3
+      },
+      "Juror 3": {
+        "in": 47887,
+        "out": 26598,
+        "calls": 14,
+        "secs": 488.8
+      },
+      "Juror 4": {
+        "in": 48031,
+        "out": 23364,
+        "calls": 16,
+        "secs": 236.1
+      },
+      "Juror 5": {
+        "in": 48430,
+        "out": 18920,
+        "calls": 15,
+        "secs": 308.9
+      },
+      "Juror 6": {
+        "in": 47915,
+        "out": 16885,
+        "calls": 15,
+        "secs": 223.4
+      },
+      "Grace McIntyre": {
+        "in": 7313,
+        "out": 11611,
+        "calls": 7,
+        "secs": 139.5
+      },
+      "Rebecca Lin": {
+        "in": 13037,
+        "out": 11232,
+        "calls": 7,
+        "secs": 207.6
+      },
+      "Samuel Ortiz": {
+        "in": 11373,
+        "out": 4598,
+        "calls": 6,
+        "secs": 58.1
+      }
+    },
+    "by_model": {
+      "mistral-small3.2:24b": {
+        "in": 100932,
+        "out": 5000,
+        "calls": 38,
+        "secs": 938.0
+      },
+      "gemma4:12b": {
+        "in": 394324,
+        "out": 241670,
+        "calls": 146,
+        "secs": 3396.2
+      }
+    }
+  },
+  "started": "2026-10-31T19:57:39",
+  "minutes": 110.3
+}

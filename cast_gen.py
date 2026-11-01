@@ -140,7 +140,7 @@ WITNESSES:
 {wits}
 
 Return one entry per witness, in the same order, with the same number.
-Make them sound clearly different from each other. Keep it grounded.
+Make them sound clearly different from each other through temperament, vocabulary and pace. Keep it grounded. Don't guess an accent or language from someone's name or ethnicity; only give a regional accent if their role or background in the case calls for it.
 
 Return JSON in exactly this shape:
 {VOICE_SCHEMA}
