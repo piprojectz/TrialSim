@@ -10,3 +10,4 @@ runs/*
 
 # Secrets
 .env
+voices/

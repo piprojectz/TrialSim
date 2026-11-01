@@ -434,6 +434,18 @@ def witness_sides(case, case_path):
     return sides
 
 
+def juror_personas(case):
+    """Generated jury from cast_gen.py if the case has one, else the fixed personas."""
+    jury = case.get("jury") or []
+    if len(jury) >= NUM_JURORS:
+        return [f"{j['name']}, a {j['age']}-year-old {j['occupation']}. {j.get('background', '')} "
+                f"You lean {j.get('predisposition', 'neutral')} because {j.get('why', '')} "
+                f"How you weigh evidence: {j.get('reasoning_style', '')} "
+                f"How you talk: {j.get('speech', '')}".strip().rstrip(".")
+                for j in jury[:NUM_JURORS]]
+    return random.sample(JUROR_PERSONAS, NUM_JURORS)
+
+
 def build_cast(case, sides):
     pub, gt = case["public"], case["ground_truth"]
     locker = "\n".join(f"[{e['id']}] {e['name']}: {e['description']}"
@@ -472,7 +484,8 @@ def build_cast(case, sides):
             f"You are testifying as: {w.get('role', '')}.\n"
             f"WHAT YOU ACTUALLY KNOW: {w.get('knows', '')}\n"
             f"YOUR BIAS: {w.get('bias', '')}\n{lie}\n\n"
-            "You only know what you personally saw or heard. Answer only the question asked. "
+            + (f"HOW YOU COME ACROSS AND TALK: {w['voice']}\n" if w.get("voice") else "")
+            + "You only know what you personally saw or heard. Answer only the question asked. "
             f"Stay in character.\n\n{header}"))
 
     roster = "\n".join(f"- {w['name']}: {w.get('role', '')}" for w in gt["witnesses"])
@@ -488,7 +501,7 @@ def build_cast(case, sides):
               f"never \"I\" or \"me\". Keep the witnesses straight; do not confuse what a "
               f"witness did with what {d} did. Think for yourself and do not just go along "
               f"with the other jurors.\n\n{header}\n\nWITNESSES:\n{roster}")
-        for i, p in enumerate(random.sample(JUROR_PERSONAS, NUM_JURORS))
+        for i, p in enumerate(juror_personas(case))
     ]
     return pros, defense, judge, witnesses, jurors
 

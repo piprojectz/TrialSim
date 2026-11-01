@@ -16,6 +16,8 @@ Every statement, objection, private thought, and juror ballot from one complete 
 - **Biased and lying witnesses.** Each witness has a bias, and some are secretly instructed to lie when it suits them.
 - **Realistic deliberation.** Jurors with distinct personas record private leanings after every phase, then hold a secret first ballot and up to three discussion rounds (dissenters speak first), with an Allen charge if deadlocked. The verdict must be unanimous or it's a hung jury.
 - **Scored against the truth.** Every verdict is compared with the case's hidden ground truth, so you can measure how often persuasion beats facts.
+- **Generated juries and witness voices.** A cast generator gives every case six jurors with their own backgrounds, leanings, and speaking styles, plus a distinct personality for each witness.
+- **Animated replay.** A paper-cutout courtroom replays any trial: speech and thought bubbles, objection bursts, a judge whose face reddens as her patience drains, smirking lawyers, juror confidence rings, and a jury-room scene. Optional neural voices read every line.
 - **Engineering details.** Per-agent and per-model token accounting, plus detection of runaway "thinking" loops with automatic retry.
 
 ## The cast
@@ -25,8 +27,9 @@ Every statement, objection, private thought, and juror ballot from one complete 
 | Prosecutor | Wade Pruitt, East Texas drawl, plays dumb then goes for the throat | `gemma4:12b` |
 | Defense | Preston Whitmore III, polished Houston big-firm attorney | `mistral-small3.2:24b` |
 | Judge | Eleanor Price, strict and extremely short-tempered | `mistral-small3.2:24b` |
-| Witnesses & jurors | Generated per case; jurors drawn from 8 personas | `gemma4:12b` |
+| Witnesses & jurors | Generated per case by `cast_gen.py` (falls back to 8 fixed juror personas) | `gemma4:12b` |
 | Case generator | Writes each crime, its hidden truth, the evidence, and the witnesses | `gpt-oss:20b` |
+| Cast generator | Casts the jury and gives each witness a voice | `gpt-oss:20b` |
 
 ## Trial flow
 
@@ -38,10 +41,14 @@ Requires [Ollama](https://ollama.com) running locally with the models above pull
 
 ```
 python case_gen.py          # generate a case with a hidden truth
+python cast_gen.py          # cast the jury and witness voices (optional)
 python trial.py             # run the newest case
 python report.py --open     # browse the trial as an HTML report
+python player.py --open     # replay it as an animated courtroom
 python summarize.py --open  # scoreboard across all trials
 ```
+
+Optional voices: `voices.py` reads every line aloud with local neural text-to-speech ([Kokoro](https://github.com/hexgrad/kokoro) for most of the cast, [Chatterbox](https://github.com/resemble-ai/chatterbox) voice cloning for the prosecutor) and the player uses the clips automatically. Without them, the player falls back to the browser's built-in speech.
 
 See [CHEATSHEET.md](CHEATSHEET.md) for every option, including report filters like `--lies`, `--thoughts-only`, and `--phase deliberation`.
 
@@ -51,6 +58,8 @@ Each run writes to `runs/<case>_<time>/`:
 - `transcript.jsonl`: every event, tagged `public`, `private`, or `jury`
 - `result.json`: verdict, ground truth, objections, judge patience, tokens, runtime
 - `report.html`: a readable trial report with flags and the jury table
+- `player.html`: the animated replay (self-contained; open it in any browser)
+- `audio/`: voice clips, if `voices.py` was run
 
 The example run's files are in [`runs/case_20261029_212402_110800`](runs/case_20261029_212402_110800), and its report is viewable [here](https://piprojectz.github.io/TrialSim/runs/case_20261029_212402_110800/report.html).
 

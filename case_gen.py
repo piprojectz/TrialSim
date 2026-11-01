@@ -18,6 +18,7 @@ import json
 import random
 import re
 import sys
+import urllib.error
 import urllib.request
 from datetime import datetime
 from pathlib import Path
@@ -111,6 +112,30 @@ def past_cases() -> list[str]:
     return out
 
 
+def used_names() -> set[str]:
+    """Every person's name from ALL earlier cases (defendant, victim, witnesses, culprit)."""
+    names = set()
+    for f in CASES_DIR.glob("case_*.json"):
+        try:
+            c = json.loads(f.read_text(encoding="utf-8"))
+        except Exception:
+            continue
+        gt = c.get("ground_truth", {})
+        for d in (gt.get("defendant"), gt.get("victim")):
+            if isinstance(d, dict) and d.get("name"):
+                names.add(str(d["name"]).strip())
+        names.update(str(w["name"]).strip() for w in gt.get("witnesses", []) if w.get("name"))
+        names.update(str(j["name"]).strip() for j in c.get("jury", []) if j.get("name"))
+    return {n for n in names if n and len(n.split()) <= 3}   # skip org names like "X Care Home"
+
+
+def case_names(case: dict) -> list[str]:
+    out = [str(case.get(k, {}).get("name", "")) for k in ("defendant", "victim")
+           if isinstance(case.get(k), dict)]
+    out += [str(w.get("name", "")) for w in case.get("witnesses", [])]
+    return [n.strip() for n in out if n.strip()]
+
+
 def parse_case(raw: str) -> dict:
     """Parse JSON, tolerating code fences or stray text around it."""
     text = re.sub(r"^```(?:json)?|```$", "", raw.strip(), flags=re.M).strip()
@@ -134,6 +159,10 @@ def build_prompt(guilty: bool, crime: str, setting: str, occupation: str,
     avoid = past_cases()
     avoid_txt = ("\nDo NOT reuse any names, plots or situations from these earlier cases:\n- "
                  + "\n- ".join(avoid) + "\n") if avoid else ""
+    taken = sorted(used_names())
+    if taken:
+        avoid_txt += ("\nThese people already exist in other cases. Do NOT reuse "
+                      "these exact people; prefer less common names:\n" + ", ".join(taken) + "\n")
     vehicle = "" if crime == "hit-and-run" else (
         "\nThis case must NOT involve a car crash, collision or traffic incident.")
     p = f"""Design a fictional criminal case.
@@ -186,6 +215,21 @@ def validate(case: dict, guilty: bool) -> list[str]:
     if sum(1 for w in wits if w.get("will_lie")) > 1:
         errs.append("at most one witness may lie")
 
+    odd = [n for n in case_names(case)
+           if re.search(r"[,()'\u2019]|\bthe\b", n, re.I) or not 2 <= len(n.split()) <= 4]
+    if odd:
+        errs.append("every person needs a plain first and last name (no descriptions like "
+                    f"\"the victim's daughter\" in the name field): {', '.join(odd)}")
+
+    taken = {n.lower() for n in used_names()}
+    reused = [n for n in case_names(case) if n.lower() in taken]
+    if reused:
+        errs.append(f"these people already exist in earlier cases, invent new names: "
+                    f"{', '.join(reused)}")
+    dname = str(case["defendant"].get("name", "")).strip().lower()
+    if dname and any(dname in str(w.get("name", "")).lower() for w in case["witnesses"]):
+        errs.append("the defendant cannot also be listed as a witness")
+
     name = str(case["defendant"].get("name", "")).lower().split()
     perp = str(case["actual_perpetrator"]).lower()
     if name:
@@ -204,7 +248,11 @@ def generate(guilty: bool, crime: str | None = None) -> dict:
     for attempt in range(1, MAX_RETRIES + 1):
         print(f"  attempt {attempt}: generating {crime} case at {setting}, defendant is a "
               f"{occupation} ({'guilty' if guilty else 'innocent'})...")
-        raw = ask(build_prompt(guilty, crime, setting, occupation, feedback))
+        try:
+            raw = ask(build_prompt(guilty, crime, setting, occupation, feedback))
+        except (urllib.error.URLError, TimeoutError, ConnectionError) as e:
+            print(f"    Ollama error ({e}); retrying...")
+            continue
         try:
             case = parse_case(raw)
         except json.JSONDecodeError as e:

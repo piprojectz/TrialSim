@@ -1,0 +1,552 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>__TITLE__ · TrialSim player</title>
+<style>
+:root{--bg:#14161b;--panel:#1d2027;--line:#2e333d;--ink:#e9e6df;--mute:#9aa0a6;--accent:#f5a524;
+  --g:#e5484d;--ng:#3e8ef7;--u:#8b9099;--think:#a78bfa}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+main{max-width:1100px;margin:0 auto;padding:16px}
+h1{font-size:22px;margin:0}
+.sub{color:var(--mute);font-size:13px;margin:2px 0 10px}
+.phases{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+.phases button{background:var(--panel);color:var(--mute);border:1px solid var(--line);border-radius:999px;
+  padding:3px 12px;font-size:13px;cursor:pointer}
+.phases button.on{color:#111;background:var(--accent);border-color:var(--accent);font-weight:600}
+.stage{position:relative;border-radius:12px;overflow:hidden;border:1px solid var(--line);background:#000}
+.stage svg{display:block;width:100%;height:auto}
+#dlg{background:var(--panel);border:1px solid var(--line);border-radius:12px;margin-top:10px;padding:12px 16px;
+  min-height:150px;max-height:260px;overflow:auto}
+#dlg .who{display:flex;gap:8px;align-items:baseline;flex-wrap:wrap;margin-bottom:4px}
+#dlg .name{font-weight:700;font-size:16px}
+#dlg .chip:empty{display:none}
+#dlg .chip{font-size:12px;color:var(--mute);border:1px solid var(--line);border-radius:999px;padding:0 8px}
+#dlg .kind{font-size:12px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--accent)}
+#dlg.think{border:1px dashed var(--think);background:#211d2e}
+#dlg.think .kind{color:var(--think)}
+#dlg.think #txt{font-style:italic;color:#d9d0f5}
+#txt{white-space:pre-wrap}
+.polls{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;margin-top:8px}
+.pj{border:1px solid var(--line);border-radius:8px;padding:6px 8px;font-size:13px}
+.pj b{display:block}
+.bar{height:6px;border-radius:3px;background:#2a2e36;margin-top:4px;overflow:hidden}
+.bar i{display:block;height:100%}
+.ctrl{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-top:10px}
+.ctrl button{background:var(--panel);color:var(--ink);border:1px solid var(--line);border-radius:8px;
+  padding:6px 12px;font-size:15px;cursor:pointer;min-width:44px}
+.ctrl button.play{background:var(--accent);color:#111;border-color:var(--accent);font-weight:700;min-width:84px}
+.ctrl select{background:var(--panel);color:var(--ink);border:1px solid var(--line);border-radius:8px;padding:6px}
+.ctrl label{color:var(--mute);font-size:14px;display:flex;align-items:center;gap:6px;cursor:pointer}
+#prog{flex:1 1 200px;accent-color:var(--accent)}
+#count{color:var(--mute);font-size:13px;min-width:70px;text-align:right}
+.hint{color:var(--mute);font-size:12px;margin-top:8px}
+#start{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  background:rgba(10,10,14,.45);cursor:pointer;border:0;width:100%;padding:0}
+#start span{background:var(--accent);color:#111;font-weight:800;font-size:22px;border-radius:999px;
+  padding:14px 30px;box-shadow:0 6px 24px rgba(0,0,0,.4)}
+#endcard{position:absolute;inset:0;display:none;align-items:center;justify-content:center;
+  background:rgba(10,10,14,.78);padding:16px}
+#endcard .card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:22px 26px;
+  max-width:560px;text-align:center}
+#endcard .big{font-size:30px;font-weight:800;letter-spacing:.02em}
+#endcard .truth{margin-top:14px;text-align:left;font-size:14px;color:#d8d4cc;display:none}
+#endcard button{margin-top:14px;background:var(--accent);color:#111;border:0;border-radius:8px;
+  padding:8px 16px;font-weight:700;cursor:pointer}
+@media (max-width:600px){main{padding:12px}h1{font-size:18px}#dlg{max-height:220px}}
+
+/* scene animation */
+.talking .mouth-talk{animation:talk .22s infinite alternate;transform-box:fill-box;transform-origin:center}
+@keyframes talk{from{transform:scaleY(.25)}to{transform:scaleY(1)}}
+.talking{animation:bob .5s infinite alternate}
+@keyframes bob{from{transform:translateY(0)}to{transform:translateY(-3px)}}
+.shake{animation:shake .12s 8 alternate}
+@keyframes shake{from{transform:translateX(-4px) rotate(-1deg)}to{transform:translateX(4px) rotate(1deg)}}
+.pulse{animation:pulse 1.1s ease-out 1}
+@keyframes pulse{0%{stroke-width:14;opacity:.2}60%{stroke-width:8;opacity:1}100%{stroke-width:6}}
+.pop{animation:pop .45s cubic-bezier(.2,1.6,.4,1) 1;transform-box:fill-box;transform-origin:center}
+@keyframes pop{from{transform:scale(.2);opacity:0}to{transform:scale(1);opacity:1}}
+.gavel{transform-box:fill-box;transform-origin:85% 85%}
+.gavel.hit{animation:gavel .25s 3 alternate}
+@keyframes gavel{from{transform:rotate(0)}to{transform:rotate(-38deg)}}
+.cane{transform-box:fill-box;transform-origin:50% 100%;animation:cane .18s 10 alternate}
+@keyframes cane{from{transform:rotate(-14deg) translateY(-14px)}to{transform:rotate(14deg) translateY(-18px)}}
+.zzz{animation:zzz 2s infinite}
+@keyframes zzz{from{opacity:0;transform:translate(0,0)}50%{opacity:1}to{opacity:0;transform:translate(10px,-22px)}}
+.steam{animation:steam 1.2s infinite}
+@keyframes steam{from{opacity:.9;transform:translateY(0) scale(.8)}to{opacity:0;transform:translateY(-26px) scale(1.4)}}
+.dots circle{animation:dot 1s infinite}
+.dots circle:nth-child(2){animation-delay:.15s}.dots circle:nth-child(3){animation-delay:.3s}
+@keyframes dot{0%,100%{opacity:.25}50%{opacity:1}}
+.flash{opacity:0;animation:flash 1.2s ease-out 1}
+@keyframes flash{from{opacity:.55}to{opacity:0}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important}}
+</style>
+</head>
+<body>
+<main>
+  <h1 id="title"></h1>
+  <div class="sub" id="sub"></div>
+  <div class="phases" id="phases"></div>
+  <div class="stage">
+    <svg id="scene" viewBox="0 0 1200 675" role="img" aria-label="Courtroom"></svg>
+    <button id="start" type="button" aria-label="Start the trial"><span>&#9654; Start the trial</span></button>
+    <div id="endcard"><div class="card">
+      <div class="sub">Verdict</div>
+      <div class="big" id="endbig"></div>
+      <div id="endsub" class="sub"></div>
+      <button id="reveal" type="button">Reveal what really happened</button>
+      <div class="truth" id="truth"></div>
+      <div><button id="replay" type="button">Watch again</button></div>
+    </div></div>
+  </div>
+  <div id="dlg"><div class="who"><span class="name" id="who"></span><span class="chip" id="role"></span>
+    <span class="kind" id="kind"></span></div><div id="txt"></div><div id="extra"></div></div>
+  <div class="ctrl">
+    <button id="prev" type="button" aria-label="Previous">&#9664;</button>
+    <button id="play" class="play" type="button">Play</button>
+    <button id="next" type="button" aria-label="Next">&#9654;</button>
+    <select id="speed" aria-label="Speed">
+      <option value="0.5">0.5×</option><option value="1" selected>1×</option>
+      <option value="2">2×</option><option value="4">4×</option>
+    </select>
+    <label><input type="checkbox" id="thoughts" checked> Private thoughts</label>
+    <label id="voicebox"><input type="checkbox" id="voice" checked> Voices</label>
+    <input type="range" id="prog" min="0" value="0" aria-label="Position">
+    <span id="count"></span>
+  </div>
+  <div class="hint">Space = play/pause · ← → = step · hover a juror to see their private reasoning · voices: recorded clips when the run has them, otherwise your browser's built-in speech</div>
+</main>
+<script>
+const D = __DATA__;
+const B = D.beats;
+const $ = id => document.getElementById(id);
+const INK = '#2a2320';
+const SKIN = ['#f1c27d', '#e0ac69', '#c68642', '#8d5524', '#ffdbac', '#d4a373', '#b77b4f', '#f3d2b3'];
+const SHIRT = ['#3b7a57', '#a64b2a', '#4a6fa5', '#7d5ba6', '#b58a2a', '#2f8f8f', '#9c3d5b', '#5b6b7d'];
+const HAIR = ['#2b1d14', '#5a3a22', '#b0b0b0', '#1a1a1a', '#8a5a2b', '#d9b26f', '#3d2b1f', '#6b4423'];
+const LEAN = {guilty: '#e5484d', 'not guilty': '#3e8ef7', undecided: '#8b9099', none: '#8b9099'};
+const esc = t => String(t ?? '').replace(/[&<>"]/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;'}[c]));
+
+function mix(a, b, t) {
+  const p = h => [1, 3, 5].map(i => parseInt(h.slice(i, i + 2), 16));
+  const A = p(a), C = p(b);
+  return '#' + A.map((v, i) => Math.round(v + (C[i] - v) * t).toString(16).padStart(2, '0')).join('');
+}
+
+// ---------- faces (head space: radius 26, centre 0,0)
+function eyes(m) {
+  if (m === 'sleep') return `<path d="M-11 -3q3 3 6 0M5 -3q3 3 6 0" stroke="${INK}" stroke-width="2" fill="none"/>`;
+  if (m === 'think') return `<circle cx="-6" cy="-6" r="2.4" fill="${INK}"/><circle cx="10" cy="-6" r="2.4" fill="${INK}"/>`;
+  const r = m === 'shocked' ? 3.6 : 2.6;
+  return `<circle cx="-8" cy="-3" r="${r}" fill="${INK}"/><circle cx="8" cy="-3" r="${r}" fill="${INK}"/>`;
+}
+function brows(m) {
+  const d = {
+    smirk: 'M-12 -11L-4 -11M4 -14L12 -17', angry: 'M-12 -14L-3 -9M3 -9L12 -14',
+    furious: 'M-13 -15L-3 -8M3 -8L13 -15', annoyed: 'M-12 -12L-4 -10M4 -10L12 -12',
+    shocked: 'M-12 -16L-4 -18M4 -18L12 -16', worried: 'M-12 -9L-4 -13M4 -13L12 -9',
+    hopeful: 'M-12 -12L-4 -14M4 -14L12 -12', think: 'M-12 -12L-4 -13M4 -15L12 -13',
+    happy: 'M-12 -13Q-8 -16 -4 -13M4 -13Q8 -16 12 -13'
+  }[m] || 'M-12 -11L-4 -11M4 -11L12 -11';
+  const w = m === 'furious' ? 3.2 : 2.4;
+  return `<path d="${d}" stroke="${INK}" stroke-width="${w}" stroke-linecap="round" fill="none"/>`;
+}
+function mouth(m, talking) {
+  if (talking) {
+    if (m === 'furious' || m === 'angry')
+      return `<g class="mouth-talk"><rect x="-8" y="6" width="16" height="9" rx="3" fill="${INK}"/><rect x="-6" y="6" width="12" height="3" fill="#fff"/></g>`;
+    return `<ellipse class="mouth-talk" cx="0" cy="10" rx="6" ry="4.5" fill="${INK}"/>`;
+  }
+  const d = {
+    smirk: 'M-8 10Q2 13 9 5', angry: 'M-7 13Q0 8 7 13', furious: 'M-8 14Q0 6 8 14',
+    annoyed: 'M-7 12L7 11', worried: 'M-8 12q4 -3 8 0t8 0', happy: 'M-8 8Q0 17 8 8',
+    hopeful: 'M-6 10Q0 13 6 10', think: 'M-2 11L7 9', sleep: 'M-2 11L2 11'
+  }[m];
+  if (m === 'shocked') return `<ellipse cx="0" cy="11" rx="4.5" ry="5.5" fill="${INK}"/>`;
+  return `<path d="${d || 'M-7 10Q0 12 7 10'}" stroke="${INK}" stroke-width="2.4" stroke-linecap="round" fill="none"/>`;
+}
+function head(o) {
+  const s = (o.r || 26) / 26, m = o.mood || 'neutral';
+  return `<g transform="translate(${o.x} ${o.y}) scale(${s})">${o.back || ''}` +
+    `<circle r="26" fill="${o.skin}" stroke="${INK}" stroke-width="2"/>${o.hair || ''}` +
+    `${eyes(m)}${brows(m)}${mouth(m, o.talking)}${o.front || ''}</g>`;
+}
+function body(x, y, w, color, h = 110) {
+  return `<path d="M${x - w} ${y + h}L${x - w + 4} ${y + 18}Q${x} ${y + 2} ${x + w - 4} ${y + 18}L${x + w} ${y + h}Z" fill="${color}" stroke="${INK}" stroke-width="2"/>`;
+}
+const shortHair = c => `<path d="M-25 -6Q-26 -30 0 -30Q26 -30 25 -6Q20 -20 0 -21Q-20 -20 -25 -6Z" fill="${c}"/>`;
+const longHair = c => `<path d="M-27 14Q-30 -32 0 -31Q30 -32 27 14Q24 -14 0 -20Q-24 -14 -27 14Z" fill="${c}"/>`;
+const curlyHair = c => `<g fill="${c}"><circle cx="-16" cy="-20" r="9"/><circle cx="-4" cy="-26" r="9"/><circle cx="9" cy="-25" r="9"/><circle cx="19" cy="-17" r="8"/></g>`;
+const HAIRS = [shortHair, longHair, curlyHair, shortHair];
+
+function speechMark(x, y, think) {
+  if (think) return `<g transform="translate(${x + 26} ${y - 62})" class="pop"><circle cx="-14" cy="34" r="3" fill="#efe9ff" stroke="${INK}"/><circle cx="-6" cy="24" r="5" fill="#efe9ff" stroke="${INK}"/>` +
+    `<path d="M0 0q-4 -14 10 -14q6 -10 18 -4q14 -4 16 8q10 4 2 14q-2 10 -16 8q-8 8 -18 2q-14 2 -12 -14z" fill="#efe9ff" stroke="${INK}" stroke-width="1.6"/>` +
+    `<g class="dots" fill="#7c5cd6"><circle cx="10" cy="2" r="2.6"/><circle cx="20" cy="2" r="2.6"/><circle cx="30" cy="2" r="2.6"/></g></g>`;
+  return `<g transform="translate(${x + 22} ${y - 64})" class="pop"><path d="M0 0h48a8 8 0 0 1 8 8v16a8 8 0 0 1 -8 8h-30l-10 10v-10h-8a8 8 0 0 1 -8 -8v-16a8 8 0 0 1 8 -8z" fill="#fff" stroke="${INK}" stroke-width="1.6"/>` +
+    `<g class="dots" fill="${INK}"><circle cx="14" cy="16" r="3"/><circle cx="24" cy="16" r="3"/><circle cx="34" cy="16" r="3"/></g></g>`;
+}
+function tag(x, y, t, size = 13, color = '#fff8ea') {
+  return `<text x="${x}" y="${y}" text-anchor="middle" font-size="${size}" font-weight="600" fill="${color}" stroke="#2a2320" stroke-width="3" paint-order="stroke">${esc(t)}</text>`;
+}
+function ring(x, y, r, lean, conf, pulse, label, why) {
+  const C = 2 * Math.PI * r, col = LEAN[lean] || LEAN.none, len = lean === 'none' ? 0 : C * conf / 100;
+  return `<g><title>${esc(label)} · ${esc(lean === 'none' ? 'no poll yet' : lean + ' ' + conf + '%')}${why ? ' — ' + esc(why) : ''}</title>` +
+    `<circle cx="${x}" cy="${y}" r="${r}" fill="none" stroke="#000" stroke-opacity=".25" stroke-width="6"/>` +
+    (len ? `<circle cx="${x}" cy="${y}" r="${r}" fill="none" stroke="${col}" stroke-width="6" stroke-linecap="round" ` +
+    `stroke-dasharray="${len} ${C}" transform="rotate(-90 ${x} ${y})" class="${pulse ? 'pulse' : ''}"/>` : '') +
+    `<circle cx="${x}" cy="${y}" r="${r + 16}" fill="transparent"/></g>`;
+}
+
+// ---------- characters
+function person(key, b, x, y, o = {}) {
+  const speaking = b.key === key && (b.t === 'say' || b.t === 'think');
+  const mood = b.moods[key] || o.mood || 'neutral';
+  const talking = speaking && b.t === 'say';
+  const cls = talking ? 'talking' : '';
+  const inner = (o.body || '') + head({x, y, r: o.r || 26, skin: o.skin, mood, talking, hair: o.hair, back: o.back, front: o.front});
+  return `<g id="p-${key}" class="${cls} ${o.cls || ''}">${inner}</g>` + (speaking ? speechMark(x, y, b.t === 'think') : '');
+}
+
+function judge(b) {
+  const p = b.pat, heat = Math.min(1, Math.max(0, (100 - p) / 100));
+  const skin = mix('#f3cfa6', '#e2453b', Math.pow(heat, 1.3));
+  const x = 600, y = 128;
+  const hair = `<circle cx="0" cy="-30" r="10" fill="#c9c9c9" stroke="${INK}" stroke-width="1.5"/><path d="M-26 0Q-28 -28 0 -28Q28 -28 26 0Q22 -18 0 -19Q-22 -18 -26 0Z" fill="#c9c9c9"/>`;
+  const glasses = `<g fill="none" stroke="${INK}" stroke-width="1.4"><circle cx="-8" cy="-3" r="6.5"/><circle cx="8" cy="-3" r="6.5"/><path d="M-1.5 -3h3"/></g>`;
+  const vein = p < 35 ? `<path d="M10 -20l4 3l-4 2l4 3" stroke="#a11" stroke-width="2" fill="none"/>` : '';
+  const steam = p < 20 ? `<g fill="#fff" opacity=".85"><circle class="steam" cx="-34" cy="-12" r="6"/><circle class="steam" cx="34" cy="-12" r="6" style="animation-delay:.5s"/></g>` : '';
+  const shake = b.fx.includes('shake') ? 'shake' : '';
+  return `<g class="${shake}">` + person('judge', b, x, y, {skin, hair, front: glasses + vein + steam,
+    body: body(x, y, 46, '#1b1b1f', 120) + `<path d="M${x - 12} ${y + 22}L${x} ${y + 40}L${x + 12} ${y + 22}" fill="#fff" stroke="${INK}" stroke-width="1.5"/>`}) + '</g>';
+}
+
+function wade(b) {
+  const x = 230, y = 418;
+  const hat = `<ellipse cx="0" cy="-19" rx="42" ry="8" fill="#7a4a24" stroke="${INK}" stroke-width="2"/>` +
+    `<path d="M-21 -20Q-24 -50 -7 -47Q0 -40 7 -47Q24 -50 21 -20Z" fill="#8b5a2b" stroke="${INK}" stroke-width="2"/>` +
+    `<rect x="-21" y="-27" width="42" height="5" fill="#3b2412"/>`;
+  const pick = b.key === 'pros' && b.t === 'say' ? '' : `<path d="M8 11L22 7" stroke="#e2c58a" stroke-width="2.4" stroke-linecap="round"/>`;
+  const bolo = `<path d="M${x} ${y + 26}V${y + 50}" stroke="#3b2412" stroke-width="2"/><circle cx="${x}" cy="${y + 34}" r="4" fill="#c9a227" stroke="${INK}"/>`;
+  return person('pros', b, x, y, {skin: SKIN[4], front: hat + pick, body: body(x, y, 42, '#b08850') + `<path d="M${x - 10} ${y + 20}L${x} ${y + 30}L${x + 10} ${y + 20}" fill="#f4efe4"/>` + bolo});
+}
+function preston(b) {
+  const x = 545, y = 418;
+  const hair = `<path d="M-26 -4Q-27 -31 0 -31Q25 -31 26 -6Q14 -23 -6 -20Q-20 -18 -26 -4Z" fill="#20160f"/><path d="M-12 -26Q2 -30 14 -24" stroke="#5b4636" stroke-width="2" fill="none"/>`;
+  const tie = `<path d="M${x} ${y + 28}l-12 -7v14zM${x} ${y + 28}l12 -7v14z" fill="#8b1e2d" stroke="${INK}" stroke-width="1.2"/><circle cx="${x}" cy="${y + 28}" r="3" fill="#6a1220"/>`;
+  return person('def', b, x, y, {skin: SKIN[7], hair, body: body(x, y, 42, '#1f2a44') + `<path d="M${x - 10} ${y + 18}L${x} ${y + 44}L${x + 10} ${y + 18}" fill="#f4f4f4"/>` + tie});
+}
+function defendant(b) {
+  const x = 690, y = 430;
+  return person('defendant', b, x, y, {skin: SKIN[1], hair: shortHair('#3a2a1e'), mood: 'worried', body: body(x, y, 38, '#6b7280')});
+}
+function witness(b) {
+  if (!b.stand) return '';
+  const i = b.standIdx || 0, x = 860, y = 214;
+  return person('witness', b, x, y, {skin: SKIN[(i + 2) % SKIN.length], hair: HAIRS[i % HAIRS.length](HAIR[(i + 3) % HAIR.length]),
+    mood: 'worried', r: 24, body: body(x, y, 34, SHIRT[(i + 1) % SHIRT.length], 90)});
+}
+function baba(b) {
+  const x = 1060, y = 612, m = b.moods.baba;
+  const scarf = `<path d="M-30 8Q-33 -36 0 -36Q33 -36 30 8Q22 -16 0 -18Q-22 -16 -30 8Z" fill="#c0392b" stroke="${INK}" stroke-width="2"/>` +
+    `<g fill="#f6e7c8"><circle cx="-14" cy="-24" r="2.4"/><circle cx="0" cy="-30" r="2.4"/><circle cx="14" cy="-24" r="2.4"/><circle cx="-22" cy="-8" r="2.2"/><circle cx="22" cy="-8" r="2.2"/></g>` +
+    `<path d="M-6 24l6 10l6 -10z" fill="#c0392b" stroke="${INK}" stroke-width="1.5"/>`;
+  const cane = `<g class="${m === 'cane' ? 'cane' : ''}"><path d="M${x + 38} ${y + 62}V${y - 4}q0 -12 -12 -12" stroke="#5a3b1e" stroke-width="5" fill="none" stroke-linecap="round"/></g>`;
+  const z = m === 'sleep' ? `<g font-weight="700" fill="#fff" font-size="16"><text class="zzz" x="${x + 24}" y="${y - 30}">z</text><text class="zzz" x="${x + 34}" y="${y - 42}" style="animation-delay:.6s">Z</text></g>` : '';
+  return body(x, y, 34, '#3d3350', 80) + head({x, y, r: 24, skin: '#f0cfae', mood: m === 'cane' ? 'angry' : m === 'sleep' ? 'sleep' : 'neutral', hair: '', front: scarf}) + cane + z;
+}
+
+function juror(b, i, x, y, r = 22, bodyH = r * 3.4) {
+  const k = 'J' + (i + 1), st = D.polls[b.jp][i] || ['none', 0, ''];
+  const speaking = b.key === k;
+  const mood = b.moods[k] || (st[0] === 'none' || st[1] < 60 ? 'neutral' : 'think');
+  const hair = HAIRS[i % HAIRS.length](HAIR[i % HAIR.length]);
+  return `<g class="${speaking && b.t === 'say' ? 'talking' : ''}">` + body(x, y, r * 1.45, SHIRT[i % SHIRT.length], bodyH) +
+    head({x, y, r, skin: SKIN[i % SKIN.length], mood, talking: speaking && b.t === 'say', hair}) + '</g>' +
+    ring(x, y, r + 9, st[0], st[1], b.pulse, D.jurors[i], st[2]) + (speaking ? speechMark(x, y, false) : '');
+}
+
+// ---------- scenes
+function court(b) {
+  let s = `<rect width="1200" height="675" fill="#d8c4a0"/>` +
+    `<rect y="300" width="1200" height="190" fill="#8b5e3c"/><g stroke="#6f4a2e" stroke-width="3">` +
+    Array.from({length: 13}, (_, i) => `<line x1="${i * 100}" y1="300" x2="${i * 100}" y2="490"/>`).join('') + `</g>` +
+    `<rect y="490" width="1200" height="185" fill="#a9825a"/>` +
+    `<circle cx="600" cy="70" r="46" fill="#e2c46e" stroke="#9a7a2a" stroke-width="5"/><circle cx="600" cy="70" r="30" fill="none" stroke="#9a7a2a" stroke-width="2"/>` +
+    `<text x="600" y="76" text-anchor="middle" font-size="16" font-weight="800" fill="#7a5a1a">★</text>`;
+  s += judge(b);
+  // bench
+  s += `<rect x="455" y="196" width="290" height="110" rx="6" fill="#6f4628" stroke="${INK}" stroke-width="2"/><rect x="440" y="186" width="320" height="18" rx="4" fill="#83552f" stroke="${INK}" stroke-width="2"/>` +
+    `<rect x="540" y="232" width="120" height="30" rx="4" fill="#5a381f"/>` + tag(600, 253, 'Judge Price', 13);
+  s += `<g class="gavel ${b.fx.includes('gavel') ? 'hit' : ''}"><rect x="690" y="168" width="40" height="7" rx="3" fill="#5a3b1e" transform="rotate(-20 710 172)"/><rect x="676" y="156" width="20" height="26" rx="4" fill="#3d2615" stroke="${INK}" stroke-width="1.5" transform="rotate(-20 686 169)"/></g>`;
+  // patience meter
+  const p = b.pat, col = p > 60 ? '#3fae6a' : p > 30 ? '#e0a72e' : '#e5484d';
+  s += `<g><text x="790" y="62" font-size="13" font-weight="700" fill="#3b2a18">Judge's patience</text><rect x="790" y="70" width="150" height="14" rx="7" fill="#5c4630"/>` +
+    `<rect x="790" y="70" width="${1.5 * p}" height="14" rx="7" fill="${col}"/><text x="948" y="82" font-size="13" font-weight="700" fill="#3b2a18">${p}</text></g>`;
+  // witness stand
+  s += witness(b);
+  s += `<rect x="800" y="262" width="120" height="74" rx="6" fill="#6f4628" stroke="${INK}" stroke-width="2"/><rect x="792" y="254" width="136" height="14" rx="4" fill="#83552f" stroke="${INK}" stroke-width="2"/>`;
+  if (b.stand) s += tag(860, 320, b.stand, 13);
+  // jury box: back row, divider, front row, front panel
+  const xs = [1000, 1068, 1136];
+  s += `<rect x="955" y="300" width="230" height="190" rx="6" fill="#7a5032" stroke="${INK}" stroke-width="2"/>`;
+  xs.forEach((x, i) => s += juror(b, i, x, 336));
+  s += `<rect x="955" y="368" width="230" height="16" fill="#83552f" stroke="${INK}" stroke-width="2"/>`;
+  xs.forEach((x, i) => s += juror(b, i + 3, x, 412));
+  s += `<rect x="948" y="440" width="244" height="52" rx="6" fill="#6f4628" stroke="${INK}" stroke-width="2"/>` + tag(1070, 472, 'Jury', 14);
+  // counsel
+  s += wade(b) + preston(b) + defendant(b);
+  s += `<rect x="120" y="492" width="250" height="14" rx="3" fill="#83552f" stroke="${INK}" stroke-width="2"/><rect x="132" y="506" width="226" height="56" fill="#6f4628" stroke="${INK}" stroke-width="2"/>` + tag(245, 540, 'Wade Pruitt · prosecution');
+  s += `<rect x="460" y="492" width="300" height="14" rx="3" fill="#83552f" stroke="${INK}" stroke-width="2"/><rect x="472" y="506" width="276" height="56" fill="#6f4628" stroke="${INK}" stroke-width="2"/>` +
+    `<rect x="600" y="470" width="44" height="24" rx="4" fill="#6b3f1d" stroke="${INK}" stroke-width="1.5"/><path d="M613 470v-6h18v6" stroke="${INK}" stroke-width="2.5" fill="none"/>` +
+    tag(545, 540, 'Preston Whitmore III') + tag(690, 540, D.defendant);
+  // gallery
+  s += `<rect y="575" width="1200" height="10" fill="#6f4628"/>` + Array.from({length: 14}, (_, i) => `<rect x="${i * 90 + 20}" y="560" width="8" height="20" fill="#6f4628"/>`).join('');
+  [150, 270, 390, 520, 640, 760, 900].forEach((x, i) => s += `<circle cx="${x}" cy="${652 + (i % 2) * 6}" r="24" fill="${HAIR[(i + 2) % HAIR.length]}" stroke="${INK}" stroke-width="2"/>`);
+  s += baba(b) + tag(1060, 668, 'Babushka', 12);
+  s += effects(b);
+  return s;
+}
+
+function juryRoom(b) {
+  let s = `<rect width="1200" height="675" fill="#e6d9bf"/><rect y="470" width="1200" height="205" fill="#9b7653"/>` +
+    `<rect x="90" y="70" width="220" height="170" fill="#bfe0f2" stroke="${INK}" stroke-width="3"/><g stroke="#e9eef2" stroke-width="6">` +
+    Array.from({length: 7}, (_, i) => `<line x1="92" y1="${86 + i * 22}" x2="308" y2="${86 + i * 22}"/>`).join('') + '</g>' +
+    `<circle cx="1060" cy="110" r="42" fill="#fff" stroke="${INK}" stroke-width="3"/><path d="M1060 110V82M1060 110L1080 120" stroke="${INK}" stroke-width="3"/>`;
+  const st = D.polls[b.jp], g = st.filter(x => x[0] === 'guilty').length, ng = st.filter(x => x[0] === 'not guilty').length;
+  s += `<rect x="430" y="40" width="340" height="120" rx="6" fill="#fafaf7" stroke="${INK}" stroke-width="3"/>` +
+    `<text x="600" y="78" text-anchor="middle" font-size="18" font-weight="700" fill="#333">Last secret ballot</text>` +
+    `<text x="530" y="128" text-anchor="middle" font-size="32" font-weight="800" fill="#e5484d">${g}</text><text x="530" y="148" text-anchor="middle" font-size="13" fill="#555">guilty</text>` +
+    `<text x="670" y="128" text-anchor="middle" font-size="32" font-weight="800" fill="#3e8ef7">${ng}</text><text x="670" y="148" text-anchor="middle" font-size="13" fill="#555">not guilty</text>`;
+  const pos = [[300, 330], [430, 290], [560, 272], [690, 272], [820, 290], [950, 330]];
+  pos.forEach(([x, y], i) => s += juror(b, i, x, y, 30, 150));
+  s += `<ellipse cx="625" cy="500" rx="470" ry="105" fill="#7a4f2c" stroke="${INK}" stroke-width="3"/><ellipse cx="625" cy="490" rx="450" ry="92" fill="#8b5e36"/>`;
+  pos.forEach(([x], i) => s += tag(x, 440, D.jurors[i], 14));
+  s += `<rect x="560" y="470" width="30" height="44" rx="6" fill="#cfe8f7" stroke="${INK}" stroke-width="2" opacity=".9"/>` +
+    `<rect x="400" y="480" width="60" height="40" fill="#fff" stroke="${INK}" transform="rotate(-8 430 500)"/><rect x="760" y="476" width="60" height="40" fill="#fff" stroke="${INK}" transform="rotate(6 790 496)"/>`;
+  s += tag(600, 650, 'Jury room · deliberation', 16);
+  return s + effects(b);
+}
+
+function effects(b) {
+  let s = '';
+  const burst = (x, y, txt, fill, stroke) => `<g class="pop"><polygon points="${starPts(x, y, 120, 70, 14)}" fill="${fill}" stroke="${INK}" stroke-width="3"/>` +
+    `<text x="${x}" y="${y + 10}" text-anchor="middle" font-size="30" font-weight="900" fill="${stroke}" stroke="#fff" stroke-width="5" paint-order="stroke">${txt}</text></g>`;
+  if (b.fx.includes('objection')) s += burst(b.key === 'pros' ? 330 : 520, 300, 'OBJECTION!', '#ffd84d', '#c0392b');
+  if (b.fx.includes('sustained')) s += stamp(600, 338, 'SUSTAINED', '#c0392b');
+  if (b.fx.includes('overruled')) s += stamp(600, 338, 'OVERRULED', '#2b6cb0');
+  if (b.fx.includes('fake')) s += stamp(600, 338, 'FAKE EXHIBIT', '#8e44ad');
+  if (b.fx.includes('contempt')) s += `<rect width="1200" height="675" fill="#e5484d" class="flash"/>` + stamp(600, 338, 'CONTEMPT WARNING', '#c0392b');
+  return s;
+}
+function stamp(x, y, t, c) {
+  const w = t.length * 22 + 44;
+  return `<g class="pop" transform="rotate(-4 ${x} ${y})"><rect x="${x - w / 2}" y="${y - 26}" width="${w}" height="48" rx="8" fill="#fff" fill-opacity=".92" stroke="${c}" stroke-width="4"/>` +
+    `<text x="${x}" y="${y + 8}" text-anchor="middle" font-size="28" font-weight="900" fill="${c}" letter-spacing="2">${t}</text></g>`;
+}
+function starPts(cx, cy, rx, ry, n) {
+  const pts = [];
+  for (let i = 0; i < n * 2; i++) {
+    const a = Math.PI * i / n, k = i % 2 ? 0.72 : 1;
+    pts.push(`${(cx + Math.cos(a) * rx * k).toFixed(1)},${(cy + Math.sin(a) * ry * k).toFixed(1)}`);
+  }
+  return pts.join(' ');
+}
+
+// ---------- playback
+let unlocked = false;
+let i = 0, playing = false, timer = null, typer = null, speed = 1, showThoughts = true;
+const visible = b => showThoughts || b.t !== 'think';
+const roleLabel = r => ({'defense attorney': 'defense', prosecutor: 'prosecution'})[r] || r || '';
+
+function render() {
+  const b = B[i];
+  if (unlocked) $('start').style.display = 'none';
+  $('scene').innerHTML = b.scene === 'jury' ? juryRoom(b) : court(b);
+  $('prog').value = i;
+  $('count').textContent = `${i + 1} / ${B.length}`;
+  document.querySelectorAll('.phases button').forEach(el => el.classList.toggle('on', el.dataset.p === b.phase));
+  const dlg = $('dlg');
+  dlg.className = b.t === 'think' ? 'think' : '';
+  $('extra').innerHTML = '';
+  $('endcard').style.display = 'none';
+  clearInterval(typer);
+  hush();
+  if (b.t === 'say' || b.t === 'think') {
+    const label = b.key && b.key[0] === 'J' && b.role === 'juror' ? D.jurors[+b.key.slice(1) - 1] : b.name;
+    $('who').textContent = label;
+    $('role').textContent = roleLabel(b.role);
+    $('kind').textContent = b.kind || '';
+    type(b.text, b.t === 'think' ? 60 : 42);
+  } else if (b.t === 'poll') {
+    $('who').textContent = b.ballot ? 'Jury room' : 'Jury box';
+    $('role').textContent = 'private';
+    $('kind').textContent = b.kind;
+    const t = b.tally || {};
+    $('txt').textContent = `${t.guilty || 0} guilty · ${t['not guilty'] || 0} not guilty` + (t.undecided ? ` · ${t.undecided} undecided` : '');
+    $('extra').innerHTML = '<div class="polls">' + D.polls[b.jp].map((st, k) =>
+      `<div class="pj" title="${esc(st[2])}"><b>${esc(D.jurors[k])}</b>${esc(st[0])} · ${st[1]}%<div class="bar"><i style="width:${st[1]}%;background:${LEAN[st[0]]}"></i></div></div>`).join('') + '</div>';
+    schedule(2800);
+  } else if (b.t === 'end') {
+    $('who').textContent = 'End of trial';
+    $('role').textContent = ''; $('kind').textContent = '';
+    $('txt').textContent = 'Press Watch again, or jump to any phase above.';
+    showEnd();
+    stop();
+  }
+}
+function type(text, cps) {
+  const el = $('txt'), b = B[i], useVoice = voiceOn && unlocked && TTS;
+  let n = 0, typed = false, spoken = !useVoice;
+  el.textContent = '';
+  const finish = () => {
+    if (!typed || !spoken) return;
+    document.querySelectorAll('.talking').forEach(g => g.classList.remove('talking'));
+    schedule(useVoice ? 500 : 1300 + (b.t === 'think' ? 700 : 0));
+  };
+  const clip = voiceOn && unlocked && D.audio && D.audio[i];
+  if (clip) {
+    spoken = false;
+    cps = 0;                                   // typing follows the clip's playback position
+    playClip(clip, b, frac => { n = Math.max(n, Math.floor(text.length * frac)); },
+             () => { spoken = true; n = text.length; finish(); },
+             () => speak(text, b, k => { n = Math.max(n, k); }, () => { spoken = true; n = text.length; finish(); }));
+  } else if (useVoice) {
+    cps = 15 * Math.min(speed, 2);             // roughly speaking pace, nudged by word boundaries
+    speak(text, b, k => { n = Math.max(n, k); }, () => { spoken = true; n = text.length; finish(); });
+  }
+  const step = cps ? Math.max(1, Math.round(cps * (useVoice ? 1 : speed) / 30)) : 0;
+  typer = setInterval(() => {
+    n += step;
+    el.textContent = text.slice(0, n);
+    if (n >= text.length) { clearInterval(typer); typed = true; finish(); }
+  }, 1000 / 30);
+}
+
+// ---------- voices (browser speech synthesis)
+const TTS = 'speechSynthesis' in window ? window.speechSynthesis : null;
+let voiceOn = true, VOICES = [], speakId = 0;
+const FEMALE = /female|zira|aria|jenny|samantha|karen|moira|tessa|victoria|fiona|susan|hazel|libby|sonia|michelle|emma|ava|allison|serena|kate|catherine|linda|heera|natasha|clara|joanna|salli|kimberly|ivy|amy|olivia|ana\b|nancy|sara|elizabeth|jane|ashley|cora|monica|neerja|ruth/i;
+const MALE = /\bmale|david|mark|guy|daniel|alex|fred|ryan|george|thomas|james|christopher|eric|roger|brian|andrew|oliver|arthur|aaron|rishi|matthew|joey|justin|liam|william|prabhat|tony|davis|jason|steffan|brandon|ethan|kai|reed|rocko|grandpa/i;
+const gender = v => FEMALE.test(v.name) ? 'f' : MALE.test(v.name) ? 'm' : '?';
+function loadVoices() {
+  if (!TTS) return;
+  const q = v => (/natural|online|neural|google|premium|enhanced/i.test(v.name) ? 0 : 1);
+  VOICES = TTS.getVoices().filter(v => /^en/i.test(v.lang)).sort((a, b) => q(a) - q(b));
+}
+if (TTS) { loadVoices(); TTS.onvoiceschanged = loadVoices; } else if (!D.audio || !Object.keys(D.audio).length) $('voicebox').style.display = 'none';
+function profile(b) {
+  const k = b.key || '';
+  if (k === 'judge') return {g: 'f', lang: 'en-US', pitch: 1.1, rate: 1.12, n: 0};
+  if (k === 'pros') return {g: 'm', lang: 'en-US', pitch: 0.75, rate: 0.9, n: 0};
+  if (k === 'def') return {g: 'm', lang: 'en-GB', pitch: 1.0, rate: 1.0, n: 0};
+  if (k === 'witness') { const s = b.standIdx || 0; return {g: s % 2 ? 'm' : 'f', lang: 'en', pitch: 0.9 + (s % 3) * 0.12, rate: 1.0, n: 1 + s}; }
+  if (k[0] === 'J') { const j = +k.slice(1); return {g: j % 2 ? 'm' : 'f', lang: 'en', pitch: 0.85 + (j % 3) * 0.12, rate: 1.0 + (j % 2) * 0.06, n: j}; }
+  return {g: '?', lang: 'en', pitch: 1, rate: 1, n: 0};
+}
+function pickVoice(p) {
+  if (!VOICES.length) return null;
+  const tiers = [VOICES.filter(v => gender(v) === p.g && v.lang.replace('_', '-').startsWith(p.lang)),
+                 VOICES.filter(v => gender(v) === p.g), VOICES];
+  const list = tiers.find(l => l.length);
+  return list[p.n % list.length];
+}
+function speak(text, b, onChar, onEnd) {
+  const id = ++speakId, p = profile(b), voice = pickVoice(p), think = b.t === 'think';
+  // Chrome cuts off long utterances, so read sentence by sentence
+  const parts = text.match(/[^.!?\n]+[.!?]*["')\]]*\s*|\n+/g) || [text];
+  let offset = 0, k = 0;
+  const next = () => {
+    if (id !== speakId) return;
+    while (k < parts.length && !parts[k].trim()) offset += parts[k++].length;
+    if (k >= parts.length) { onEnd(); return; }
+    const part = parts[k++], u = new SpeechSynthesisUtterance(part), start = offset;
+    offset += part.length;
+    if (voice) u.voice = voice;
+    u.lang = voice ? voice.lang : 'en-US';
+    u.pitch = p.pitch * (think ? 0.95 : 1);
+    u.rate = Math.min(2, p.rate * Math.min(speed, 2) * (think ? 1.05 : 1));
+    u.volume = think ? 0.65 : 1;
+    u.onboundary = e => { if (id === speakId) onChar(start + (e.charIndex || 0)); };
+    u.onend = next;
+    u.onerror = next;
+    TTS.speak(u);
+  };
+  next();
+}
+let CLIP = null;
+function playClip(src, b, onFrac, onEnd, onFail) {
+  const id = ++speakId, au = new Audio(src);
+  CLIP = au;
+  au.playbackRate = Math.min(speed, 2);
+  au.volume = b.t === 'think' ? 0.7 : 1;
+  au.ontimeupdate = () => { if (id === speakId && au.duration) onFrac(au.currentTime / au.duration); };
+  au.onended = () => { if (id === speakId) onEnd(); };
+  au.onerror = () => { if (id === speakId) (TTS ? onFail() : onEnd()); };
+  au.play().catch(() => { if (id === speakId) (TTS ? onFail() : onEnd()); });
+}
+function hush() { speakId++; if (TTS) TTS.cancel(); if (CLIP) { CLIP.pause(); CLIP = null; } }
+function schedule(ms) {
+  clearTimeout(timer);
+  if (playing) timer = setTimeout(() => step(1), ms / speed);
+}
+function step(dir) {
+  let n = i + dir;
+  while (n >= 0 && n < B.length && !visible(B[n])) n += dir;
+  if (n < 0 || n >= B.length) { stop(); return; }
+  i = n; render();
+}
+function go(n) {
+  i = Math.max(0, Math.min(B.length - 1, n));
+  while (i < B.length - 1 && !visible(B[i])) i++;
+  clearTimeout(timer); render();
+}
+function play() { unlocked = true; $('start').style.display = 'none'; playing = true; $('play').textContent = 'Pause'; if (B[i].t === 'end') go(0); else render(); }
+function stop() { playing = false; $('play').textContent = 'Play'; clearTimeout(timer); hush(); }
+function showEnd() {
+  const e = D.end, t = e.tally || {};
+  const v = e.verdict === 'hung' ? 'Hung jury · mistrial' : (e.verdict || '').toUpperCase();
+  $('endbig').textContent = v;
+  $('endbig').style.color = e.verdict === 'guilty' ? '#e5484d' : e.verdict === 'not guilty' ? '#3e8ef7' : '#f5a524';
+  $('endsub').textContent = `Final ballot: ${t.guilty || 0} guilty · ${t['not guilty'] || 0} not guilty`;
+  const tr = $('truth');
+  if (e.truth) {
+    $('reveal').style.display = '';
+    tr.innerHTML = `<b>The defendant was ${e.truth.guilty ? 'GUILTY' : 'INNOCENT'}.</b> Actual perpetrator: ${esc(e.truth.perpetrator)}<br><br>${esc(e.truth.story)}`;
+  } else $('reveal').style.display = 'none';
+  tr.style.display = 'none';
+  $('endcard').style.display = 'flex';
+}
+
+$('title').textContent = D.title;
+$('sub').textContent = D.sub || 'An AI courtroom, replayed';
+$('phases').innerHTML = D.phases.map(p => `<button type="button" data-p="${p.id}">${p.label}</button>`).join('');
+$('phases').onclick = e => { const p = D.phases.find(x => x.id === e.target.dataset.p); if (p) go(p.at); };
+$('prog').max = B.length - 1;
+$('prog').oninput = e => go(+e.target.value);
+$('play').onclick = () => playing ? stop() : play();
+$('next').onclick = () => { clearTimeout(timer); step(1); };
+$('prev').onclick = () => { clearTimeout(timer); step(-1); };
+$('speed').onchange = e => { speed = +e.target.value; };
+$('voice').onchange = e => { voiceOn = e.target.checked; if (!voiceOn) hush(); if (playing) render(); };
+$('thoughts').onchange = e => { showThoughts = e.target.checked; if (!visible(B[i])) step(1); };
+$('reveal').onclick = () => { $('truth').style.display = 'block'; $('reveal').style.display = 'none'; };
+$('replay').onclick = () => { go(0); play(); };
+// Browsers only allow sound after the viewer interacts with the page once; after that, every line
+// is voiced as it appears, whether playing or stepping.
+const unlock = () => { unlocked = true; };
+['pointerdown', 'keydown'].forEach(ev => document.addEventListener(ev, unlock, {capture: true}));
+$('start').onclick = () => { unlock(); play(); };
+document.addEventListener('keydown', e => {
+  if (e.target.tagName === 'INPUT' && e.target.type === 'range') return;
+  if (e.code === 'Space') { e.preventDefault(); playing ? stop() : play(); }
+  if (e.code === 'ArrowRight') { clearTimeout(timer); step(1); }
+  if (e.code === 'ArrowLeft') { clearTimeout(timer); step(-1); }
+});
+render();
+</script>
+</body>
+</html>
