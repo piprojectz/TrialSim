@@ -1,11 +1,11 @@
-# TrialSim
+﻿# TrialSim
 
 A multi-agent courtroom simulation running entirely on local LLMs through Ollama. A generator invents a crime with a hidden ground truth, then an AI prosecutor, defense attorney, judge, witnesses, and a six-person jury try the case. Every agent's **private thoughts are logged before and after each turn**, so you can compare what they said in court with what they actually believed.
 
 Both lawyers are told to **win at all costs**, regardless of whether the defendant did it.
 
-### ▶ [Watch a full trial](https://piprojectz.github.io/TrialSim/runs/case_20261029_212402_110800/report.html)
-Every statement, objection, private thought, and juror ballot from one complete run.
+### ▶ [Watch a trial, animated and voiced](https://piprojectz.github.io/TrialSim/runs/case_20261031_195613_195739/player.html)
+*State v. Caleb Jensen*: a youth pastor on trial for a murder at a murder mystery dinner party. Paper-cutout courtroom, neural voices, private thoughts, and the jury room. Or [read the full report](https://piprojectz.github.io/TrialSim/runs/case_20261031_195613_195739/report.html) with every statement, objection, private thought, and juror ballot.
 
 ## What makes it interesting
 
